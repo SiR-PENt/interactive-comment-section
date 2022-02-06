@@ -1,11 +1,12 @@
 import Dashboard from './Dashboard';
-import Preferences from './Preferences';
 import Login from './Login';
-import { useState} from 'react';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import useToken from './useToken';
 
 const App = () => {
-  const [token, setToken] = useState('');
+  
+  const {token, setToken } = useToken();//{token is null at first, setToken sets the new token after login details input }
+
   if (!token) {
      return <Login setToken={setToken}/>
   } 
@@ -15,8 +16,7 @@ const App = () => {
   <Router>
     <>
     <Routes>
-     <Route exact path='/dashboard' element={<Dashboard/>}/>
-     <Route exact path='/preferences' element={<Preferences/>}/>
+     <Route path='/dashboard' element={<Dashboard/>}/>
     </Routes>
     </>
   </Router>
