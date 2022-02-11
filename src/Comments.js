@@ -1,25 +1,45 @@
 import React from 'react';
-import edit from './icon-edit.svg';
-import minus from './icon-minus.svg';
-import plus from './icon-plus.svg';
-import reply from './icon-reply.svg';
+import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
+import { FaReply } from 'react-icons/fa';
+import { useGlobalContext } from './Context';
 
 const Comments = ({commentData}) => {
+  const { state, toggleAmount } = useGlobalContext();
 
-  const { date, content, score, user, replies} = commentData;
+  const { id, date, content, score, user, replies} = commentData;
   const { username, image } = user;
 
   return <article>
    <header>
+     <img src={image.png} alt={`${username} 'img'`}/>
      <h1>{username}</h1>
      <p>{date}</p>
    </header>
+
    <p>{content}</p>
-   <p>
-    <span>{plus}</span>
-    <span>{score}</span>
-    <span>{minus}</span>
-     </p>
+
+  <footer>
+   <div>
+    <button onClick={() => toggleAmount(id, 'inc')}>
+      {/* type inc for the increment btn*/}
+      <AiOutlinePlus />
+    </button>
+    <span>
+      {score}
+      </span>
+    <button onClick={() => toggleAmount(id, 'dec')}>
+      {/* type dec for the decrement btn */}
+      <AiOutlineMinus />
+    </button>
+     </div>
+
+     <div>
+       <button>
+         <FaReply/><span>Reply</span>
+       </button>
+     </div>
+   </footer>
+
   </article>;
 };
 
