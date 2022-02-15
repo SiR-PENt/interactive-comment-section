@@ -4,9 +4,10 @@ import { FaReply } from 'react-icons/fa';
 import { useGlobalContext } from './Context';
 
 const Comments = ({commentData}) => {
-  const { state, toggleAmount } = useGlobalContext();
+  const { toggleAmount } = useGlobalContext();
 
   const { id, date, content, score, user, replies} = commentData;
+  
   const { username, image } = user;
 
   return <article>

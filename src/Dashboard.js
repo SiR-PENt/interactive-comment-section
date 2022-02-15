@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
-import data from './data';
 import Comments from './Comments';
-import { v4 as uuidv4 } from 'uuid';
+import dataComments from './dataComments'
+import { useGlobalContext } from './Context';
 
 
 const Dashboard = () => {
- 
+  const { state, newComments } = useGlobalContext();
+  //setting and fetching cometns to and from the server
+  
+ //useState
+const [comments, setComments] = useState(state);
 
   return <main>
-
-  {data.comments.map(comment => {
-  const id = uuidv4();
-  const newComment = {...comment, id}//modify the new comment with the comment created from uuid function
-  let today = new Date();
-  let date = today.getFullYear()+'/'+(today.getMonth() + 1 )+'/'+today.getDate();
-
-  const { content, score, user, replies } = newComment;
+  { 
+  comments.map(comment => {
+  
+  const { id, content, score, user, replies } = comment;
   
   return (
-   <Comments key={id} commentData = {{ id, date, content, score, user, replies}}/>
+   <Comments key={id} commentData = {{ id, content, score, user, replies}}/>
   )
   })}   
   </main>;

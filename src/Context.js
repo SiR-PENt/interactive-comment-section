@@ -1,18 +1,30 @@
-import React,{ useContext, useReducer} from 'react'
+import React,{ useContext, useEffect, useReducer} from 'react'
 import reducer from './reducer';
-import data from './data.json';
+import dataComments from './dataComments'
 
 const AppContext = React.createContext();// call the context api
 
 const Context = ({children}) => {
-  const [state, dispatch] = useReducer(reducer, data);
 
-  const toggleAmmount = (id, type) => {
+const newComments  = dataComments();
+
+useEffect(() => {
+    localStorage.setItem('newComments',JSON.stringify(newComments))
+  },[]);
+
+const getLocalStorage = () => {
+  return localStorage.getItem('newComments');
+}
+const initialState = JSON.parse(getLocalStorage())
+console.log(initialState);
+const [state, dispatch] = useReducer(reducer, initialState);
+
+  const toggleAmount = (id, type) => {
       dispatch({type:'TOGGLE_AMOUNT', payload:{id, type}});
   }
 
   return (
-    <AppContext.Provider value={{toggleAmmount}}>
+    <AppContext.Provider value={{toggleAmount, state, newComments}}>
         {children}
     </AppContext.Provider>
   )
