@@ -1,25 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { FaReply } from 'react-icons/fa';
 import { useGlobalContext } from './Context';
 
 const Comments = ({commentData}) => {
+
   const { toggleAmount } = useGlobalContext();
 
-  const { id, date, content, score, user, replies} = commentData;
-  
+const [showReply, setShowReply] = useState(false);
+  const { id, content, createdAt, score, user, replies} = commentData;
+
   const { username, image } = user;
 
   return <article>
    <header>
      <img src={image.png} alt={`${username} 'img'`}/>
      <h1>{username}</h1>
-     <p>{date}</p>
+     <p>{createdAt}</p>
    </header>
 
    <p>{content}</p>
 
-  <footer>
+  
    <div>
     <button onClick={() => toggleAmount(id, 'inc')}>
       {/* type inc for the increment btn*/}
@@ -35,12 +37,21 @@ const Comments = ({commentData}) => {
      </div>
 
      <div>
-       <button>
+       <button onClick={() => setShowReply(true)}>
          <FaReply/><span>Reply</span>
        </button>
      </div>
-   </footer>
 
+  { showReply && <form>
+    <div>
+  <textarea name='reply'>
+  </textarea>
+     </div>
+
+     <div>
+       <button type='submit'>Reply</button>
+     </div>
+   </form> }
   </article>;
 };
 

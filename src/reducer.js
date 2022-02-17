@@ -6,12 +6,10 @@ const reducer = (state, action) => {
   if (action.type === 'TOGGLE_AMOUNT'){
     
    const tempComment = state.map(comment => {
-      console.log(comment.id);
-      console.log(action.payload.id);
-             if(comment.id === action.payload.id){
+     
+           if(comment.id === action.payload.id){
           
            if(action.payload.type === 'inc'){
-             console.log(comment.score)
 
             return {...comment, score: comment.score + 1}   
            }
@@ -22,9 +20,11 @@ const reducer = (state, action) => {
        }
        return comment;
    })
-
-   return [...tempComment];
+      return tempComment; 
   }
+  
+  
+  throw new Error( 'no matching type')
 }
 
 export default reducer

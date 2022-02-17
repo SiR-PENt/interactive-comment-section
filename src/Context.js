@@ -1,4 +1,4 @@
-import React,{ useContext, useEffect, useReducer} from 'react'
+import React,{ useState, useContext, useEffect, useReducer} from 'react'
 import reducer from './reducer';
 import dataComments from './dataComments'
 
@@ -10,21 +10,21 @@ const newComments  = dataComments();
 
 useEffect(() => {
     localStorage.setItem('newComments',JSON.stringify(newComments))
-  },[]);
+  },[newComments]);
 
 const getLocalStorage = () => {
   return localStorage.getItem('newComments');
 }
 const initialState = JSON.parse(getLocalStorage())
-console.log(initialState);
+
 const [state, dispatch] = useReducer(reducer, initialState);
 
-  const toggleAmount = (id, type) => {
+const toggleAmount = (id, type) => {
       dispatch({type:'TOGGLE_AMOUNT', payload:{id, type}});
-  }
+}
 
   return (
-    <AppContext.Provider value={{toggleAmount, state, newComments}}>
+    <AppContext.Provider value={{ toggleAmount, state, }}>
         {children}
     </AppContext.Provider>
   )
