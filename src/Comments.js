@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { FaReply } from 'react-icons/fa';
 import { useGlobalContext } from './Context';
+import Replies from './Replies';
+import { v4 as uuidv4 } from 'uuid';
 
 const Comments = ({commentData}) => {
 
-  const { toggleAmount } = useGlobalContext();
+const { toggleAmount } = useGlobalContext()
+const [showReply, setShowReply] = useState(false)
+const { id, content, createdAt, score, user, replies} = commentData;
 
-const [showReply, setShowReply] = useState(false);
-  const { id, content, createdAt, score, user, replies} = commentData;
-
-  const { username, image } = user;
+const { username, image } = user;
 
   return <article>
    <header>
@@ -24,21 +25,24 @@ const [showReply, setShowReply] = useState(false);
   
    <div>
     <button onClick={() => toggleAmount(id, 'inc')}>
-      {/* type inc for the increment btn*/}
       <AiOutlinePlus />
     </button>
+
     <span>
       {score}
       </span>
+
     <button onClick={() => toggleAmount(id, 'dec')}>
-      {/* type dec for the decrement btn */}
       <AiOutlineMinus />
     </button>
      </div>
 
      <div>
-       <button onClick={() => setShowReply(true)}>
-         <FaReply/><span>Reply</span>
+    <button onClick={() => setShowReply(true)}>
+         <FaReply/>
+         <span>
+           Reply
+           </span>
        </button>
      </div>
 
@@ -52,6 +56,16 @@ const [showReply, setShowReply] = useState(false);
        <button type='submit'>Reply</button>
      </div>
    </form> }
+
+   {
+    replies.length > 0 ? replies.map(reply => { 
+    const id = uuidv4();
+     const today = new Date();
+    const createdAt = today.getFullYear()+'/'+(today.getMonth() + 1 )+'/'+today.getDate();
+    const newReply = {...reply, id, createdAt}
+    return <Replies key = {id} reply={newReply}/>}) : 
+   <p>No replies yet</p>  
+  }
   </article>;
 };
 
