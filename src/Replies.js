@@ -20,7 +20,7 @@ const Replies = ({reply}) => {
      <p>{createdAt}</p>
    </header>
 
-   <p>{content}</p>
+   <p><span>@{replyingTo}</span> {content}</p>
 
   
    <div>

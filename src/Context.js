@@ -8,7 +8,7 @@ const AppContext = React.createContext();// call the context api
 
 const Context = ({children}) => {
 
-// const newComments  = dataComments();
+
 
 // useEffect(() => {
 //     localStorage.setItem('newComments',JSON.stringify(newComments))
@@ -23,16 +23,20 @@ const modifiedComment = data.comments.map(comment => {
   return {...comment, id};
 });//this changes the id of the comment
 
-const initialState = {...data, comments:modifiedComment};//update the previous data with the new comment that was generated
+const initialState = {...data, comments:modifiedComment};//update the comment with modifiedComment variable
 
 const [state, dispatch] = useReducer(reducer, initialState);
 
-const toggleAmount = (id, type) => {
-      dispatch({type:'TOGGLE_AMOUNT', payload:{id, type}});
-}
+const toggleAmount = (id, type) => dispatch({type:'TOGGLE_AMOUNT', payload:{id, type}});
 
-  return (
-    <AppContext.Provider value={{ toggleAmount, state }}>
+const handleSubmit = (id, content) => {
+ return function(e) {
+ return dispatch({type:'HANDLE_SUBMIT', payload:{e, id, content}});
+}
+}//JACKPOT!!
+
+return (
+    <AppContext.Provider value={{ toggleAmount, state, handleSubmit }}>
         {children}
     </AppContext.Provider>
   )
@@ -41,5 +45,4 @@ const toggleAmount = (id, type) => {
 export const useGlobalContext = () => {
     return useContext(AppContext);
 }
-
 export default Context;

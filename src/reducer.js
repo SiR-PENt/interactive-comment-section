@@ -2,19 +2,24 @@
 const reducer = (state, action) => {
   //action is an object that contains type and payload
   
+  if (action.type === 'HANDLE_SUBMIT'){ 
+      action.payload.e.preventDefault();
+      const newContent = {};
+      return state
+  
+  }
   if (action.type === 'TOGGLE_AMOUNT'){
 
           const tempComments = state.comments.map(comment => {
 
-           if(comment.id === action.payload.id)
-        
-           {         
+           if(comment.id === action.payload.id)       
+           {   
+
            if(action.payload.type === 'inc'){
             return {...comment, score: comment.score + 1}   
            }
 
-            if(action.payload.type === 'dec'){
-              
+           if(action.payload.type === 'dec'){              
             return {...comment, score: comment.score - 1}  
            }
        }
@@ -24,8 +29,6 @@ const reducer = (state, action) => {
       const newState = {...state, comments:tempComments}; 
       return newState;
   }
-  
-  
   throw new Error( 'no matching type')
 }
 
