@@ -8,11 +8,13 @@ import { v4 as uuidv4 } from 'uuid';
 const Comments = ({commentData}) => {
 const { id, content, createdAt, score, user, replies} = commentData;
 const { username, image } = user;
-const { toggleAmount, handleSubmit} = useGlobalContext()
+const { state, toggleCommentScore, handleNewReplySubmit} = useGlobalContext()
 const [showReply, setShowReply] = useState(false);
 const [newContent, setNewContent] = useState('');
 
-
+const setContentToEmptyString = () => setNewContent('');//function to reset content to emptyString after submit
+const setReplyToFalse = () => setShowReply(false);
+const generateNewId = uuidv4();
   return <article>
    <header>
      <img src={image.png} alt={`${username} 'img'`}/>
@@ -24,7 +26,7 @@ const [newContent, setNewContent] = useState('');
 
   
    <div>
-    <button onClick={() => toggleAmount(id, 'inc')}>
+    <button onClick={() => toggleCommentScore(id, 'inc')}>
       <AiOutlinePlus />
     </button>
 
@@ -32,7 +34,7 @@ const [newContent, setNewContent] = useState('');
       {score}
       </span>
 
-    <button onClick={() => toggleAmount(id, 'dec')}>
+    <button onClick={() => toggleCommentScore(id, 'dec')}>
       <AiOutlineMinus />
     </button>
      </div>
@@ -45,10 +47,16 @@ const [newContent, setNewContent] = useState('');
            </span>
        </button>
      </div>
-
-  { showReply && 
-  
-  <form onSubmit={handleSubmit(id, newContent)} >
+    { ( user.username === state.currentUser.username ) && <div>
+    <button>
+      delete
+    </button>
+    <button>
+      edit
+    </button>
+  </div>}
+  { showReply &&  
+  <form onSubmit={handleNewReplySubmit(id, newContent, setContentToEmptyString, setReplyToFalse, generateNewId)} >
     <div>
     <textarea name='reply' value={newContent} onChange={(e) => setNewContent(e.target.value)}>
     </textarea>
@@ -60,11 +68,11 @@ const [newContent, setNewContent] = useState('');
    </form> }
 
    {
-    replies.length > 0 ? replies.map(reply => { 
+    replies.length > 0 ? replies.map(singleReply => { 
     const id = uuidv4();
     const today = new Date();
     const createdAt = today.getFullYear()+'/'+(today.getMonth() + 1 )+'/'+today.getDate();
-    const newReply = {...reply, id, createdAt}
+    const newReply = {...singleReply, id, createdAt}
     return <Replies key = {id} reply={newReply}/>}) : 
    <p>No replies yet</p>  
   }

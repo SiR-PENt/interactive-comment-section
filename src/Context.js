@@ -18,25 +18,32 @@ const Context = ({children}) => {
 //   return localStorage.getItem('newComments');
 // }
 
-const modifiedComment = data.comments.map(comment => {
+const modifyComment = data.comments.map(comment => {
   const id = uuid4();
   return {...comment, id};
 });//this changes the id of the comment
 
-const initialState = {...data, comments:modifiedComment};//update the comment with modifiedComment variable
+const initialState = {...data, comments:modifyComment};//update the comment with modifiedComment variable
+
 
 const [state, dispatch] = useReducer(reducer, initialState);
 
-const toggleAmount = (id, type) => dispatch({type:'TOGGLE_AMOUNT', payload:{id, type}});
+const toggleCommentScore = (id, type) => dispatch({type:'TOGGLE_COMMENT', payload:{id, type}});
 
-const handleSubmit = (id, content) => {
- return function(e) {
- return dispatch({type:'HANDLE_SUBMIT', payload:{e, id, content}});
+const handleNewReplySubmit = (id, content, setToEmptyString, setToFalse, newId) => {
+   return function(e){
+     return dispatch({type: 'HANDLE_REPLY_SUBMIT', payload:{e, id, content, setToEmptyString, setToFalse, newId}});
 }
-}//JACKPOT!!
+}
+  const handleNewCommentSubmit = (id, content, setToEmptyString) => {
+   return function(e){
+     return dispatch({type: 'HANDLE_COMMENT_SUBMIT', payload:{e, id, content, setToEmptyString}});
+}
+}
+const toggleReplyScore = (id, type) => (dispatch({type: 'TOGGLE_REPLY' , payload:id}))
 
-return (
-    <AppContext.Provider value={{ toggleAmount, state, handleSubmit }}>
+  return (
+    <AppContext.Provider value={{ toggleCommentScore, toggleReplyScore, state, handleNewReplySubmit, handleNewCommentSubmit }}>
         {children}
     </AppContext.Provider>
   )
