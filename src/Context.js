@@ -19,20 +19,28 @@ const Context = ({children}) => {
 // }
 
 const modifyComment = data.comments.map(comment => {
-  const id = uuid4();
-  return {...comment, id};
-});//this changes the id of the comment
+  const commentsId = uuid4();
+  const {replies} = comment;
+    const modifiedReply = replies.map(reply => { 
+    const id = uuid4()
+    return  {...reply, id}
+   })
+
+  return {...comment, id:commentsId, replies:modifiedReply }
+});//this changes the id of the comment and replies
 
 const initialState = {...data, comments:modifyComment};//update the comment with modifiedComment variable
 
-
 const [state, dispatch] = useReducer(reducer, initialState);
+
 
 const toggleCommentScore = (id, type) => dispatch({type:'TOGGLE_COMMENT', payload:{id, type}});
 
-const handleNewReplySubmit = (id, content, setToEmptyString, setToFalse, newId) => {
+const toggleReplyScore = (id, type) => (dispatch({type: 'TOGGLE_REPLY' , payload:{id, type}}));
+
+const handleNewReplySubmit = (id, content, setToDefault, newId) => {
    return function(e){
-     return dispatch({type: 'HANDLE_REPLY_SUBMIT', payload:{e, id, content, setToEmptyString, setToFalse, newId}});
+     return dispatch({type: 'HANDLE_REPLY_SUBMIT', payload:{ e, id, content, setToDefault, newId }});
 }
 }
   const handleNewCommentSubmit = (id, content, setToEmptyString) => {
@@ -40,10 +48,13 @@ const handleNewReplySubmit = (id, content, setToEmptyString, setToFalse, newId) 
      return dispatch({type: 'HANDLE_COMMENT_SUBMIT', payload:{e, id, content, setToEmptyString}});
 }
 }
-const toggleReplyScore = (id, type) => (dispatch({type: 'TOGGLE_REPLY' , payload:id}))
-
+ const handleReply = (commentId, replyId, content, newId, toDefault) => {
+   return function(e) {
+        return dispatch({type: 'HANDLE_REPLY', payload:{e, commentId, replyId, content, newId, toDefault}})
+   }
+ }
   return (
-    <AppContext.Provider value={{ toggleCommentScore, toggleReplyScore, state, handleNewReplySubmit, handleNewCommentSubmit }}>
+    <AppContext.Provider value={{ toggleCommentScore, toggleReplyScore, state, handleNewReplySubmit, handleNewCommentSubmit, handleReply }}>
         {children}
     </AppContext.Provider>
   )

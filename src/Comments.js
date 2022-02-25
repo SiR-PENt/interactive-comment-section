@@ -6,14 +6,15 @@ import Replies from './Replies';
 import { v4 as uuidv4 } from 'uuid';
 
 const Comments = ({commentData}) => {
-const { id, content, createdAt, score, user, replies} = commentData;
+const { id: commentId , content, createdAt, score, user, replies} = commentData;
 const { username, image } = user;
 const { state, toggleCommentScore, handleNewReplySubmit} = useGlobalContext()
 const [showReply, setShowReply] = useState(false);
 const [newContent, setNewContent] = useState('');
-
-const setContentToEmptyString = () => setNewContent('');//function to reset content to emptyString after submit
-const setReplyToFalse = () => setShowReply(false);
+const setToDefault = () => {
+  setNewContent('')
+  setShowReply(false)
+}
 const generateNewId = uuidv4();
   return <article>
    <header>
@@ -26,7 +27,7 @@ const generateNewId = uuidv4();
 
   
    <div>
-    <button onClick={() => toggleCommentScore(id, 'inc')}>
+    <button onClick={() => toggleCommentScore(commentId, 'inc')}>
       <AiOutlinePlus />
     </button>
 
@@ -34,7 +35,7 @@ const generateNewId = uuidv4();
       {score}
       </span>
 
-    <button onClick={() => toggleCommentScore(id, 'dec')}>
+    <button onClick={() => toggleCommentScore(commentId, 'dec')}>
       <AiOutlineMinus />
     </button>
      </div>
@@ -56,7 +57,7 @@ const generateNewId = uuidv4();
     </button>
   </div>}
   { showReply &&  
-  <form onSubmit={handleNewReplySubmit(id, newContent, setContentToEmptyString, setReplyToFalse, generateNewId)} >
+  <form onSubmit={handleNewReplySubmit(commentId, newContent, setToDefault, generateNewId)} >
     <div>
     <textarea name='reply' value={newContent} onChange={(e) => setNewContent(e.target.value)}>
     </textarea>
@@ -69,11 +70,10 @@ const generateNewId = uuidv4();
 
    {
     replies.length > 0 ? replies.map(singleReply => { 
-    const id = uuidv4();
     const today = new Date();
     const createdAt = today.getFullYear()+'/'+(today.getMonth() + 1 )+'/'+today.getDate();
-    const newReply = {...singleReply, id, createdAt}
-    return <Replies key = {id} reply={newReply}/>}) : 
+    const newReply = {...singleReply, createdAt}
+    return <Replies key = {singleReply.id} reply={newReply} commentId={commentId} />}) : 
    <p>No replies yet</p>  
   }
   </article>

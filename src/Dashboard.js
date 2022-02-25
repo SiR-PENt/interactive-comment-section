@@ -6,18 +6,19 @@ const Dashboard = () => {
    const {state, handleNewCommentSubmit} = useGlobalContext();
    const [content, setContent] = useState('')
    const setContentToEmptyString = () => setContent('');
-   const id = uuid4();
-   
+   const newCommentId = uuid4();
+
   return <main>
   { 
   state.comments.map(comment => {
-    const {id} = comment;
+ 
   return (
-    <Comments key={id} commentData = {{...comment}}/>
+    <Comments key={comment.id} commentData = {{...comment}}/>
   )
   })}   
   <footer>
-    <form onSubmit={handleNewCommentSubmit(id, content, setContentToEmptyString)}>
+    
+    <form onSubmit={handleNewCommentSubmit( newCommentId, content, setContentToEmptyString)}>
      <img src={state.currentUser.image.png} alt={state.currentUser.username}/>
     <textarea name='newCommentContent' value={content} onChange={(e) => setContent(e.target.value)}>
     </textarea>
