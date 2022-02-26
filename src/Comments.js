@@ -8,14 +8,25 @@ import { v4 as uuidv4 } from 'uuid';
 const Comments = ({commentData}) => {
 const { id: commentId , content, createdAt, score, user, replies} = commentData;
 const { username, image } = user;
-const { state, toggleCommentScore, handleNewReplySubmit} = useGlobalContext()
+const { state, toggleCommentScore, handleNewReplySubmit, handleCommentDelete, handleCommentEdit} = useGlobalContext()
 const [showReply, setShowReply] = useState(false);
 const [newContent, setNewContent] = useState('');
+const [isEditing, setIsEditing] = useState(false);
+
+
+const startEdit = () => {
+  setShowReply(true);
+  setIsEditing(true);
+ 
+}
+
 const setToDefault = () => {
   setNewContent('')
   setShowReply(false)
+  setIsEditing(false);
 }
 const generateNewId = uuidv4();
+
   return <article>
    <header>
      <img src={image.png} alt={`${username} 'img'`}/>
@@ -48,31 +59,41 @@ const generateNewId = uuidv4();
            </span>
        </button>
      </div>
-    { ( user.username === state.currentUser.username ) && <div>
-    <button>
+
+    { 
+    ( user.username === state.currentUser.username ) && <div>
+    <button onClick={() => handleCommentDelete(commentId)}>
       delete
     </button>
-    <button>
+    <button onClick={() => handleCommentEdit(commentId,
+      startEdit, 
+      setNewContent)}>
       edit
     </button>
-  </div>}
+  </div>
+    }
+
+
   { showReply &&  
-  <form onSubmit={handleNewReplySubmit(commentId, newContent, setToDefault, generateNewId)} >
+  <form onSubmit={handleNewReplySubmit(commentId, 
+  newContent, 
+  setToDefault, 
+  generateNewId, 
+  isEditing
+  )} >
     <div>
     <textarea name='reply' value={newContent} onChange={(e) => setNewContent(e.target.value)}>
     </textarea>
     </div>
 
      <div>
-       <button type='submit'>Reply</button>
+       <button type='submit'>{isEditing ? 'Update' : 'Reply' }</button>
      </div>
    </form> }
 
    {
     replies.length > 0 ? replies.map(singleReply => { 
-    const today = new Date();
-    const createdAt = today.getFullYear()+'/'+(today.getMonth() + 1 )+'/'+today.getDate();
-    const newReply = {...singleReply, createdAt}
+    const newReply = {...singleReply}
     return <Replies key = {singleReply.id} reply={newReply} commentId={commentId} />}) : 
    <p>No replies yet</p>  
   }

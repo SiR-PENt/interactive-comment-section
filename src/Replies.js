@@ -3,17 +3,29 @@ import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { FaReply } from 'react-icons/fa';
 import { useGlobalContext } from './Context'
 import {v4 as uuid} from 'uuid';
+
 const Replies = ({reply, commentId}) => {
    const {id, content, createdAt, user, score, replyingTo} = reply;
-   const {state, toggleReplyScore, handleReply} = useGlobalContext();
+   const { state, toggleReplyScore, handleReplyToReply, handleReplyDelete, handleReplyEdit } = useGlobalContext();
    const { username, image } = user;
    const [ showReply, setShowReply ] = useState(false)
-   const [ newContent, setNewContent ] = useState('')
+   const [ newContent, setNewContent ] = useState('');
+   const [isEditing, setIsEditing] = useState(false);
+   const [editId, setEditId] = useState(null)
    const generateNewId = uuid();
+  
+   const initializeEdit = () => {
+     setShowReply(true);
+     setIsEditing(true);
+     setEditId(id);
+   }
+
    const setToDefault = () => {
      setNewContent('')
      setShowReply(false);
+     setEditId(null)
    }
+
   return (
     <article>  
    <header>
@@ -44,23 +56,34 @@ const Replies = ({reply, commentId}) => {
          <FaReply/><span>Reply</span>
        </button>
      </div>
-    { ( user.username === state.currentUser.username ) && <div>
-    <button>
+
+    {
+    ( user.username === state.currentUser.username ) && <div>
+    <button onClick={() => handleReplyDelete(commentId, id)}>
       delete
     </button>
-    <button>
+
+    <button onClick={() => handleReplyEdit(commentId, id, initializeEdit, setNewContent)}>
       edit
     </button>
-  </div>}
+  </div>
+  }
+
      {
-       showReply &&  <form onSubmit={handleReply(commentId, id, newContent, generateNewId, setToDefault)}>
+       showReply &&  <form onSubmit={handleReplyToReply(commentId, 
+       id, 
+       newContent, 
+       generateNewId, 
+       setToDefault, 
+       isEditing, 
+       editId)}>
     <div>
     <textarea name='reply' value={newContent} onChange={(e) => setNewContent(e.target.value)}>
     </textarea>
     </div>
 
      <div>
-       <button type='submit'>Reply</button>
+       <button type='submit'>{isEditing ? 'Update' : 'Reply'}</button>
      </div>
    </form>
      }
