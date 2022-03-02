@@ -1,0 +1,93 @@
+.comment {
+    border: 1px dashed black;
+    width: 80%;
+
+    &>section {
+        background: $bg-neutral;
+        display: grid;
+        grid-template-columns: 100px auto;
+        grid-template-rows: 60px auto 60px;
+        grid-template-areas: "header header""content content""toggle reply-container";
+        border: 1px solid red;
+        height: 250px;
+        border-radius: 10px;
+        overflow: hidden;
+        padding-inline: 10px;
+
+        .comment_header {
+            grid-area: header;
+            width: 85%;
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            align-items: center;
+
+            img {
+                width: 35px;
+                height: 35px
+            }
+        }
+
+        &>p:nth-child(2) {
+            grid-area: content;
+
+        }
+
+        &>.toggle {
+            grid-area: toggle;
+            // border: 1px solid;
+
+            p {
+                color: $color-btn-and-tags;
+                background: $bg-primary;
+                display: grid;
+                border-radius: 10px;
+                align-items: center;
+                
+                grid-template-columns: repeat(3, auto);
+                height: 80%;
+                font-weight: weights(bold);
+                text-align: center;
+
+                button {
+                    color: $color-btn-and-tags;
+                    font-size: 18px;
+                    font-weight: weights(regular);
+                }
+
+                // span {
+                //     position: relative;
+                //     bottom: 2px;
+                // }
+            }
+        }
+
+        &>.reply_container {
+
+            grid-area: reply-container;
+            // border: 1px solid blue;
+            display: grid;
+            justify-items: end;
+
+            .btn_open_reply {
+                height: 80%;
+                color: $color-btn-and-tags;
+                font-weight: weights(bold);
+                font-size: 18px;
+
+                span {
+                    padding-left: 5px;
+                }
+            }
+
+            .userBtn_container {
+                height:80%;
+                border:1px solid;         
+                width:100%;
+                .btn_danger {
+                    border:1px solid;
+                }
+            }
+
+        }
+    }
+}

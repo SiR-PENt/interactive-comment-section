@@ -27,8 +27,10 @@ const setToDefault = () => {
 }
 const generateNewId = uuidv4();
 
-  return <article>
-   <header>
+  return <article className='comment'>
+
+   <section>
+   <header className='comment_header'>
      <img src={image.png} alt={`${username} 'img'`}/>
      <h1>{username}</h1>
      <p>{createdAt}</p>
@@ -36,43 +38,51 @@ const generateNewId = uuidv4();
 
    <p>{content}</p>
 
-  
-   <div>
-    <button onClick={() => toggleCommentScore(commentId, 'inc')}>
+  {/*beginning of toggle  */}
+   <div className='toggle'>
+    <p>
+    <button onClick={() => toggleCommentScore(commentId, 'inc')} >
       <AiOutlinePlus />
     </button>
-
-    <span>
-      {score}
-      </span>
-
-    <button onClick={() => toggleCommentScore(commentId, 'dec')}>
+   
+     {score}
+  
+    <button onClick={() => toggleCommentScore(commentId, 'dec')} >
       <AiOutlineMinus />
     </button>
-     </div>
+    </p>
+    </div>  
+{/* end of toggle */}
 
-     <div>
-    <button onClick={() => setShowReply(true)}>
+
+   {  ( user.username !== state.currentUser.username ) && <div className='reply_container'>
+
+    <button onClick={() => setShowReply(true)} className='btn_open_reply'>
          <FaReply/>
          <span>
            Reply
-           </span>
-       </button>
-     </div>
+         </span>
+    </button>
+
+     </div>  }  
+
 
     { 
-    ( user.username === state.currentUser.username ) && <div>
-    <button onClick={() => handleCommentDelete(commentId)}>
+    ( user.username === state.currentUser.username ) && <div className='reply_container'>
+    <div className='userBtn_container'>
+    <button onClick={() => handleCommentDelete(commentId)} className='btn_danger'>
       delete
     </button>
+
     <button onClick={() => handleCommentEdit(commentId,
       startEdit, 
-      setNewContent)}>
+      setNewContent)} className="btn_primary">
       edit
     </button>
+    </div>
   </div>
     }
-
+  </section>
 
   { showReply &&  
   <form onSubmit={handleNewReplySubmit(commentId, 
@@ -97,7 +107,8 @@ const generateNewId = uuidv4();
     return <Replies key = {singleReply.id} reply={newReply} commentId={commentId} />}) : 
    <p>No replies yet</p>  
   }
-  </article>
+
+  </article> 
 };
 
 export default Comments;
