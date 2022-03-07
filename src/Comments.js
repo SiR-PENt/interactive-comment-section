@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { FaReply } from 'react-icons/fa';
+import {MdDelete} from 'react-icons/md'
+import {MdOutlineEdit} from 'react-icons/md'
 import { useGlobalContext } from './Context';
 import Replies from './Replies';
 import { v4 as uuidv4 } from 'uuid';
@@ -71,13 +73,15 @@ const generateNewId = uuidv4();
     ( user.username === state.currentUser.username ) && <div className='reply_container'>
     <div className='userBtn_container'>
     <button onClick={() => handleCommentDelete(commentId)} className='btn_danger'>
-      delete
+      <MdDelete/>
+      Delete
     </button>
 
     <button onClick={() => handleCommentEdit(commentId,
       startEdit, 
       setNewContent)} className="btn_primary">
-      edit
+       <MdOutlineEdit/>
+      Edit
     </button>
     </div>
   </div>
@@ -85,27 +89,33 @@ const generateNewId = uuidv4();
   </section>
 
   { showReply &&  
-  <form onSubmit={handleNewReplySubmit(commentId, 
-  newContent, 
-  setToDefault, 
-  generateNewId, 
-  isEditing
-  )} >
-    <div>
-    <textarea name='reply' value={newContent} onChange={(e) => setNewContent(e.target.value)}>
+   <form onSubmit={handleNewReplySubmit(commentId, 
+    newContent, 
+    setToDefault, 
+    generateNewId, 
+    isEditing
+  )} className='reply_form'>
+
+    <div className='img-container'>
+      <img src={state.currentUser.image.png} width='35' height='35' alt={state.currentUser.username}/>
+    </div>
+    <div className='textarea_container'>
+    <textarea name='reply' value={newContent} onChange={(e) => setNewContent(e.target.value)} placeholder='Add a reply...'>
     </textarea>
     </div>
 
-     <div>
+     <div className='submit_container'>
        <button type='submit'>{isEditing ? 'Update' : 'Reply' }</button>
      </div>
    </form> }
 
    {
+
     replies.length > 0 ? replies.map(singleReply => { 
     const newReply = {...singleReply}
     return <Replies key = {singleReply.id} reply={newReply} commentId={commentId} />}) : 
    <p>No replies yet</p>  
+
   }
 
   </article> 
