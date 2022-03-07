@@ -57,20 +57,14 @@ const generateNewId = uuidv4();
 {/* end of toggle */}
 
 
-   {  ( user.username !== state.currentUser.username ) && <div className='reply_container'>
-
+   {  ( user.username !== state.currentUser.username ) ? <div className='reply_container'>
     <button onClick={() => setShowReply(true)} className='btn_open_reply'>
          <FaReply/>
          <span>
            Reply
          </span>
     </button>
-
-     </div>  }  
-
-
-    { 
-    ( user.username === state.currentUser.username ) && <div className='reply_container'>
+     </div> : <div className='reply_container'>
     <div className='userBtn_container'>
     <button onClick={() => handleCommentDelete(commentId)} className='btn_danger'>
       <MdDelete/>
@@ -84,8 +78,9 @@ const generateNewId = uuidv4();
       Edit
     </button>
     </div>
-  </div>
-    }
+  </div>     
+  // should have made these as componentes but for clarity, if username of user is === state.username return only the edit and delete btns else return reply btn
+  }  
   </section>
 
   { showReply &&  
@@ -99,6 +94,7 @@ const generateNewId = uuidv4();
     <div className='img-container'>
       <img src={state.currentUser.image.png} width='35' height='35' alt={state.currentUser.username}/>
     </div>
+    
     <div className='textarea_container'>
     <textarea name='reply' value={newContent} onChange={(e) => setNewContent(e.target.value)} placeholder='Add a reply...'>
     </textarea>
@@ -109,15 +105,14 @@ const generateNewId = uuidv4();
      </div>
    </form> }
 
-   {
-
+<section className='container_for_replies'>
+   { 
     replies.length > 0 ? replies.map(singleReply => { 
     const newReply = {...singleReply}
-    return <Replies key = {singleReply.id} reply={newReply} commentId={commentId} />}) : 
-   <p>No replies yet</p>  
+    return <Replies key = {singleReply.id} reply={newReply} commentId={commentId} />}) :  <p>No replies yet</p>  
 
   }
-
+</section>
   </article> 
 };
 

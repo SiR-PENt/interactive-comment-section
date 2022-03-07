@@ -1,0 +1,11 @@
+section.container_for_replies {
+    display: grid;
+    justify-items: end;
+    border-left:1px solid $text-color-border;
+    margin-top:20px;
+    grid-gap:20px;
+}
+
+.reply {  
+    width: 90%;
+}

@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { FaReply } from 'react-icons/fa';
+import {MdDelete} from 'react-icons/md'
+import {MdOutlineEdit} from 'react-icons/md'
 import { useGlobalContext } from './Context'
 import {v4 as uuid} from 'uuid';
 
@@ -27,17 +29,21 @@ const Replies = ({reply, commentId}) => {
    }
 
   return (
-    <article>  
-   <header>
+
+    <article className='comment reply'>
+        
+    <section>
+    <header className='comment_header'>
      <img src={image.png} alt={`${username} 'img'`}/>
      <h1>{username}</h1>
      <p>{createdAt}</p>
    </header>
 
-   <p><span>@{replyingTo}</span> {content}</p>
-
+     <p><span>@{replyingTo}</span> {content}</p>
+{/* <span>@{replyingTo}</span> */}
   
-   <div>
+   <div className='toggle'>
+     <p>
     <button onClick={() => toggleReplyScore(id, 'inc')}>
       {/* type inc for the increment btn*/}
       <AiOutlinePlus />
@@ -49,25 +55,29 @@ const Replies = ({reply, commentId}) => {
       {/* type dec for the decrement btn */}
       <AiOutlineMinus />
     </button>
+    </p>
      </div>
  
-     <div>
-       <button onClick={() => setShowReply(true)}>
-         <FaReply/><span>Reply</span>
-       </button>
-     </div>
-
     {
-    ( user.username === state.currentUser.username ) && <div>
-    <button onClick={() => handleReplyDelete(commentId, id)}>
-      delete
+    ( user.username === state.currentUser.username ) ? <div className='reply_container'>
+      <div className='userBtn_container'>
+    <button onClick={() => handleReplyDelete(commentId, id)} className='btn_danger'>
+     <MdDelete/>
+      Delete
     </button>
 
-    <button onClick={() => handleReplyEdit(commentId, id, initializeEdit, setNewContent)}>
-      edit
+    <button onClick={() => handleReplyEdit(commentId, id, initializeEdit, setNewContent)} className='btn_primary'>
+      <MdOutlineEdit/>
+      Edit
     </button>
-  </div>
+    </div>
+  </div> : <div className='reply_container'>
+             <button onClick={() => setShowReply(true)} className='btn_open_reply'>
+             <FaReply/><span>Reply</span>
+            </button>
+           </div>
   }
+</section>
 
      {
        showReply &&  <form onSubmit={handleReplyToReply(commentId, 
@@ -76,13 +86,19 @@ const Replies = ({reply, commentId}) => {
        generateNewId, 
        setToDefault, 
        isEditing, 
-       editId)}>
-    <div>
+       editId)}
+       className='reply_form'>
+
+     <div className='img-container'>
+      <img src={state.currentUser.image.png} width='35' height='35' alt={state.currentUser.username}/>
+    </div>
+
+    <div className='textarea_container'>
     <textarea name='reply' value={newContent} onChange={(e) => setNewContent(e.target.value)}>
     </textarea>
     </div>
 
-     <div>
+     <div className='submit_container'>
        <button type='submit'>{isEditing ? 'Update' : 'Reply'}</button>
      </div>
    </form>

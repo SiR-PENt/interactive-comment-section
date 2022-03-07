@@ -1,18 +1,19 @@
 .comment {
     // border: 1px dashed black;
-    width: 80%;
+    width: 90%;
 
-    &>section {
+    &>section:nth-child(1) {
         background: $bg-neutral;
         display: grid;
-        grid-template-columns: 100px auto;
+        grid-template-columns: 90px auto;
         grid-template-rows: 60px auto 60px;
         grid-template-areas: "header header""content content""toggle reply-container";
         // border: 1px solid red;
         height: 250px;
         border-radius: 10px;
-        overflow: hidden;
+        // overflow: hidden;
         padding-inline: 10px;
+
 
         .comment_header {
             grid-area: header;
@@ -29,7 +30,12 @@
 
         &>p:nth-child(2) {
             grid-area: content;
-            align-self: center;
+
+            span {
+                //for the replies
+                color: $btn-primary;
+                font-weight: weights(bold);
+            }
         }
 
         &>.toggle {
@@ -42,7 +48,6 @@
                 display: grid;
                 border-radius: 10px;
                 align-items: center;
-
                 grid-template-columns: repeat(3, auto);
                 height: 80%;
                 font-weight: weights(bold);
@@ -81,7 +86,7 @@
 
             .userBtn_container {
                 height: 90%;
-                width: 80%;
+                width: 90%;
                 justify-self: end;
 
                 .btn_danger {
@@ -97,53 +102,54 @@
         }
     }
 
-    .reply_form {
-        margin-top:15px;
-        border-radius: 10px;
-        background-color: $bg-neutral;
-        height: 170px;
-        display: grid;
-        grid-template-columns: .5fr .5fr;
-        grid-template-rows: .65fr .35fr;
-        grid-row-gap:10px;
-        padding: 20px;
-        grid-template-areas: "input input""img reply";
+}
 
-        .img-container {
-            grid-area: img;
-            align-self: center;       
+.reply_form {
+    margin-top: 15px;
+    border-radius: 10px;
+    background-color: $bg-neutral;
+    height: 170px;
+    display: grid;
+    grid-template-columns: .5fr .5fr;
+    grid-template-rows: .65fr .35fr;
+    grid-row-gap: 10px;
+    padding: 20px;
+    grid-template-areas: "input input""img reply";
+
+    .img-container {
+        grid-area: img;
+        align-self: center;
+    }
+
+    .textarea_container {
+        grid-area: input;
+
+        textarea {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            resize: none;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: weights(bold);
+            font-family: inherit;
         }
+    }
 
-        .textarea_container {
-            grid-area: input;
-            
-            textarea {
-                width: 100%;
-                height: 100%;
-                border-radius: 10px;
-                resize: none;
-                padding:10px;
-                font-size:18px;
-                font-weight:weights(bold);
-                font-family:inherit;
-            }
-        }
+    .submit_container {
+        align-self: center;
+        justify-self: end;
+        grid-area: reply;
 
-        .submit_container {
-            align-self: center;
-            justify-self:end;
-            grid-area: reply;
-
-            button {
-                font-family:inherit;
-                font-size:18px;
-                width:100px;
-                height:40px;
-                border-radius:5px;
-                background:$btn-primary;
-                color: $bg-neutral;
-                font-weight:weights(medium)
-            }
+        button {
+            font-family: inherit;
+            font-size: 18px;
+            width: 100px;
+            height: 40px;
+            border-radius: 5px;
+            background: $btn-primary;
+            color: $bg-neutral;
+            font-weight: weights(medium)
         }
     }
 }

@@ -14,5 +14,18 @@ $font-weights: ("regular": 400, "medium":500, "bold":700);
     letter-spacing: .03cm;
     font-weight: weights(bold);
     text-align: end;
-    font-family:inherit;
+    font-family: inherit;
 }
+
+// @mixin section {
+//     background: $bg-neutral;
+//     display: grid;
+//     grid-template-columns: 100px auto;
+//     grid-template-rows: 60px auto 60px;
+//     grid-template-areas: "header header" "content content" "toggle reply-container";
+//     // border: 1px solid red;
+//     height: 250px;
+//     border-radius: 10px;
+//     overflow: hidden;
+//     padding-inline: 10px;
+// }

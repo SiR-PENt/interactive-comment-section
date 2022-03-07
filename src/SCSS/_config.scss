@@ -10,14 +10,13 @@ body {
 }
 
 main {  
-
+  
     font-family: 'Rubik', sans-serif;
     display: grid; 
     place-items:center;
     justify-items:center;
     grid-row-gap:20px;
-    padding-block: 30px;
-    
+    padding-block: 30px;   
 }
 
 button {
