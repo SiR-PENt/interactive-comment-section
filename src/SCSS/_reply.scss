@@ -6,14 +6,12 @@ section.container_for_replies {
     grid-gap:20px;
     .no_reply {
         color: $text-color-border;
-        border-top:1px solid;
-        border-bottom:1px solid;
+        // border-top:1px solid;
+        // border-bottom:1px solid;
         width:100%;
-        padding:5px;
         text-align: center;
     }
 }
-
 .reply {  
     width: 90%;
 }

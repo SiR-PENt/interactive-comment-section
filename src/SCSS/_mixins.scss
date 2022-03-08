@@ -17,15 +17,14 @@ $font-weights: ("regular": 400, "medium":500, "bold":700);
     font-family: inherit;
 }
 
-// @mixin section {
-//     background: $bg-neutral;
-//     display: grid;
-//     grid-template-columns: 100px auto;
-//     grid-template-rows: 60px auto 60px;
-//     grid-template-areas: "header header" "content content" "toggle reply-container";
-//     // border: 1px solid red;
-//     height: 250px;
-//     border-radius: 10px;
-//     overflow: hidden;
-//     padding-inline: 10px;
-// }
+@mixin media-md {
+    @media screen and (min-width: 768px) {
+        @content;
+    }
+}
+
+@mixin media-lg {
+    @media screen and (min-width:1024px) {
+        @content;
+    }
+}

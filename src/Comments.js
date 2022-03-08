@@ -41,19 +41,23 @@ const generateNewId = uuidv4();
    <p>{content}</p>
 
   {/*beginning of toggle  */}
-   <div className='toggle'>
-    <p>
+  <div className='toggle'>
+
+  <div>
     <button onClick={() => toggleCommentScore(commentId, 'inc')} >
       <AiOutlinePlus />
     </button>
-   
-     {score}
+ </div>  
+
+   <p>{score}</p>
   
+  <div>
     <button onClick={() => toggleCommentScore(commentId, 'dec')} >
       <AiOutlineMinus />
     </button>
-    </p>
-    </div>  
+  </div>
+
+</div> 
 {/* end of toggle */}
 
 

@@ -35,28 +35,29 @@ const Replies = ({reply, commentId}) => {
     <section>
     <header className='comment_header'>
      <img src={image.png} alt={`${username} 'img'`}/>
-     <h1>{username}</h1>
+     <h1>
+       {username}{user.username === state.currentUser.username && <span> you</span>}
+     </h1>
      <p>{createdAt}</p>
    </header>
 
      <p><span>@{replyingTo}</span> {content}</p>
-{/* <span>@{replyingTo}</span> */}
-  
-   <div className='toggle'>
-     <p>
-    <button onClick={() => toggleReplyScore(id, 'inc')}>
-      {/* type inc for the increment btn*/}
+
+  <div className='toggle'>
+     <div>
+      <button onClick={() => toggleReplyScore(id, 'inc')}>
       <AiOutlinePlus />
-    </button>
-    <span>
-      {score}
-      </span>
+      </button>
+     </div>
+
+      <p>{score}</p>
+
+   <div>
     <button onClick={() => toggleReplyScore(id, 'dec')}>
-      {/* type dec for the decrement btn */}
       <AiOutlineMinus />
     </button>
-    </p>
-     </div>
+   </div>
+</div>
  
     {
     ( user.username === state.currentUser.username ) ? <div className='reply_container'>
@@ -87,7 +88,7 @@ const Replies = ({reply, commentId}) => {
        setToDefault, 
        isEditing, 
        editId)}
-       className='reply_form'>
+       className='form_field'>
 
      <div className='img-container'>
       <img src={state.currentUser.image.png} width='35' height='35' alt={state.currentUser.username}/>

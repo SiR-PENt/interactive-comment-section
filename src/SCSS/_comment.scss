@@ -8,8 +8,11 @@
         grid-template-columns: 90px auto;
         grid-template-rows: 60px auto 60px;
         grid-template-areas: "header header""content content""toggle reply-container";
+        //grid-template-columns:repeat(3, auto);
+        //gridtemplate-rows:auto auto;
+        // "toggle header reply-container" "toggle content content"
         // border: 1px solid red;
-        grid-row-gap:10px;
+        grid-row-gap: 10px;
         border-radius: 10px;
         // overflow: hidden;
         padding-inline: 10px;
@@ -21,17 +24,21 @@
             display: grid;
             grid-template-columns: repeat(3, auto);
             align-items: center;
-              
+
             img {
                 width: 35px;
                 height: 35px
             }
+
             h1 {
                 span {
-                    background:$btn-primary;
-                    border-radius:3px;
-                    color:$bg-neutral;
-                    font-weight:weights(bold)
+                    display: inline-block;
+                    text-align: center;
+                    width: 35px;
+                    background: $btn-primary;
+                    border-radius: 3px;
+                    color: $bg-neutral;
+                    font-weight: weights(bold)
                 }
             }
         }
@@ -49,29 +56,32 @@
         &>.toggle {
             grid-area: toggle;
             // border: 1px solid;
+            color: $btn_primary;
+            background: $bg-primary;
+            display: grid;
+            border-radius: 10px;
+            align-items: center;
+            grid-template-columns: repeat(3, auto);
+            height: 80%;
+            font-weight: weights(bold);
+            text-align: center;
 
-            p {
-                color: $btn_primary;
-                background: $bg-primary;
-                display: grid;
-                border-radius: 10px;
-                align-items: center;
-                grid-template-columns: repeat(3, auto);
-                height: 80%;
-                font-weight: weights(bold);
-                text-align: center;
+            button {
+                color: $text-color-border;
+                font-size: 18px;
+                font-weight: weights(regular);
 
-                button {
-                    color: $text-color-border;
-                    font-size: 18px;
-                    font-weight: weights(regular);
+                &:hover {
+                    color: $btn-primary;
+                    transition: color 0.3s linear;
                 }
-
-                // span {
-                //     position: relative;
-                //     bottom: 2px;
-                // }
             }
+
+
+            // span {
+            //     position: relative;
+            //     bottom: 2px;
+            // }
         }
 
         &>.reply_container {
@@ -87,6 +97,11 @@
                 font-size: 18px;
                 font-family: inherit;
 
+                &:hover {
+                    color: $text-color-border;
+                    transition: color 0.3s linear;
+                }
+
                 span {
                     padding-left: 5px;
                 }
@@ -100,10 +115,19 @@
                 .btn_danger {
                     @include user_btn($btn_danger);
 
+                    &:hover {
+                        color: $btn-danger-hover;
+                        transition: color 0.3s linear;
+                    }
                 }
 
                 .btn_primary {
                     @include user_btn($btn_primary);
+
+                    &:hover {
+                        color: $text-color-border;
+                        transition: color 0.3s linear;
+                    }
                 }
             }
 
@@ -122,7 +146,7 @@
     grid-template-rows: .65fr .35fr;
     grid-row-gap: 10px;
     padding: 20px;
-    grid-template-areas: "input input" "img reply";
+    grid-template-areas: "input input""img reply";
 
     .img-container {
         grid-area: img;
@@ -135,12 +159,17 @@
         textarea {
             width: 100%;
             height: 100%;
+            // border:$text-color-border;
             border-radius: 10px;
             resize: none;
             padding: 10px;
             font-size: 18px;
             font-weight: weights(bold);
             font-family: inherit;
+            // &:hover {
+            //     border: $btn-primary;
+            //     transition: border 0.3s linear;
+            // }
         }
     }
 
@@ -148,6 +177,7 @@
         align-self: center;
         justify-self: end;
         grid-area: reply;
+
 
         button {
             font-family: inherit;
@@ -157,12 +187,73 @@
             border-radius: 5px;
             background: $btn-primary;
             color: $bg-neutral;
-            font-weight: weights(medium)
+            font-weight: weights(medium);
+
+            &:hover {
+                background: $text-color-border;
+                transition: color 0.3s linear;
+            }
         }
     }
 }
-.form_field.comment {
-    width:350px;
-    height:220px;
-    grid-template-rows:.85fr .15fr;
+
+.icon {
+    position: relative;
+    left: -3px;
+    top: 2px;
+    font-size: 18px;
+}
+
+// for the dashboard
+footer {
+    width: 90%;
+
+    .form_field.comment {
+        width: 100%;
+        height: 220px;
+        grid-template-rows: .85fr .15fr;
+
+    }
+}
+
+// responsiveness
+
+@include media-lg {
+    .comment {
+        width: 50%;
+
+        &>section:nth-child(1) {
+            grid-template-columns: 60px auto auto;
+            grid-template-rows: auto auto;
+            grid-template-areas: "toggle header reply-container""toggle content content";
+            padding: 20px;
+            grid-column-gap: 20px;
+            min-height: 200px;
+
+            .comment_header {
+                width: 70%;
+            }
+
+            &>.toggle {
+                align-self: center;
+                grid-template-columns: auto;
+                grid-template-rows: repeat(3, auto);
+                // border: 1px solid;
+            }
+        }
+    }
+
+    .form_field {
+        grid-template-columns: 80px auto 120px;
+        grid-template-rows: auto;
+        grid-template-areas: "img input reply";
+
+        .submit_container {
+            align-self: start;
+        }
+    }
+
+    footer {
+        width: 50%;
+    }
 }

@@ -17,8 +17,8 @@ const Dashboard = () => {
     <Comments key={comment.id} commentData = {{...comment}}/>
   )
   })}   
-  <footer>
-    
+
+  <footer>  
     <form onSubmit={handleNewCommentSubmit( newCommentId, content, setContentToEmptyString)} className='form_field comment'>
       <div className='img_container'>
      <img src={state.currentUser.image.png} alt={state.currentUser.username}/>
@@ -36,7 +36,7 @@ const Dashboard = () => {
   </div>
    
     </form>
-  </footer>
+</footer>
   </main>;
 };
 
