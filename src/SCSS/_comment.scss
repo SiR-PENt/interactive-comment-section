@@ -9,7 +9,7 @@
         grid-template-rows: 60px auto 60px;
         grid-template-areas: "header header""content content""toggle reply-container";
         // border: 1px solid red;
-        height: 250px;
+        grid-row-gap:10px;
         border-radius: 10px;
         // overflow: hidden;
         padding-inline: 10px;
@@ -21,10 +21,18 @@
             display: grid;
             grid-template-columns: repeat(3, auto);
             align-items: center;
-
+              
             img {
                 width: 35px;
                 height: 35px
+            }
+            h1 {
+                span {
+                    background:$btn-primary;
+                    border-radius:3px;
+                    color:$bg-neutral;
+                    font-weight:weights(bold)
+                }
             }
         }
 
@@ -54,7 +62,7 @@
                 text-align: center;
 
                 button {
-                    color: $btn_primary;
+                    color: $text-color-border;
                     font-size: 18px;
                     font-weight: weights(regular);
                 }
@@ -104,7 +112,7 @@
 
 }
 
-.reply_form {
+.form_field {
     margin-top: 15px;
     border-radius: 10px;
     background-color: $bg-neutral;
@@ -114,7 +122,7 @@
     grid-template-rows: .65fr .35fr;
     grid-row-gap: 10px;
     padding: 20px;
-    grid-template-areas: "input input""img reply";
+    grid-template-areas: "input input" "img reply";
 
     .img-container {
         grid-area: img;
@@ -152,4 +160,9 @@
             font-weight: weights(medium)
         }
     }
+}
+.form_field.comment {
+    width:350px;
+    height:220px;
+    grid-template-rows:.85fr .15fr;
 }

@@ -26,7 +26,7 @@ const reducer = (state, action) => {
 
       // if user is submiting a new reply
       const today = new Date();
-      const createdAt = today.getFullYear()+'/'+(today.getMonth() + 1 )+'/'+today.getDate();
+      const createdAt = today.getDate() +'/' + (today.getMonth() + 1 ) + '/' + today.getFullYear()
       const newReply =  {
           id: action.payload.newId,
           content: action.payload.content,
@@ -68,7 +68,7 @@ const reducer = (state, action) => {
   if (action.type === 'HANDLE_COMMENT_SUBMIT' ){
       action.payload.e.preventDefault();
       const today = new Date();
-      const createdAt = today.getFullYear()+'/'+(today.getMonth() + 1 )+'/'+today.getDate();
+      const createdAt = today.getDate() +'/' + (today.getMonth() + 1 ) + '/' + today.getFullYear()
       const newComment = {
       id: action.payload.id,
       content: action.payload.content,
@@ -163,7 +163,7 @@ const reducer = (state, action) => {
           if (reply.id === action.payload.replyId) {
           const {user} = reply //destructure user from the reply so we can use the user.username in the newReply
           const today = new Date();
-          const createdAt = today.getFullYear()+'/'+(today.getMonth() + 1 )+'/'+today.getDate();
+          const createdAt = today.getDate() +'/' + (today.getMonth() + 1 ) + '/' + today.getFullYear()
           const newReply = { // create new reply
           id: action.payload.newId,
           content: action.payload.content,

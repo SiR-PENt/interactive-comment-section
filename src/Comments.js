@@ -34,7 +34,7 @@ const generateNewId = uuidv4();
    <section>
    <header className='comment_header'>
      <img src={image.png} alt={`${username} 'img'`}/>
-     <h1>{username}</h1>
+     <h1>{username}{user.username === state.currentUser.username && <span> you </span>}</h1>
      <p>{createdAt}</p>
    </header>
 
@@ -67,14 +67,14 @@ const generateNewId = uuidv4();
      </div> : <div className='reply_container'>
     <div className='userBtn_container'>
     <button onClick={() => handleCommentDelete(commentId)} className='btn_danger'>
-      <MdDelete/>
+      <MdDelete className='icon'/>
       Delete
     </button>
 
     <button onClick={() => handleCommentEdit(commentId,
       startEdit, 
       setNewContent)} className="btn_primary">
-       <MdOutlineEdit/>
+       <MdOutlineEdit className='icon'/>
       Edit
     </button>
     </div>
@@ -89,12 +89,12 @@ const generateNewId = uuidv4();
     setToDefault, 
     generateNewId, 
     isEditing
-  )} className='reply_form'>
+  )} className='form_field'>
 
     <div className='img-container'>
       <img src={state.currentUser.image.png} width='35' height='35' alt={state.currentUser.username}/>
     </div>
-    
+
     <div className='textarea_container'>
     <textarea name='reply' value={newContent} onChange={(e) => setNewContent(e.target.value)} placeholder='Add a reply...'>
     </textarea>
@@ -109,7 +109,7 @@ const generateNewId = uuidv4();
    { 
     replies.length > 0 ? replies.map(singleReply => { 
     const newReply = {...singleReply}
-    return <Replies key = {singleReply.id} reply={newReply} commentId={commentId} />}) :  <p>No replies yet</p>  
+    return <Replies key = {singleReply.id} reply={newReply} commentId={commentId} />}) :  <p className='no_reply'>No replies yet</p>  
 
   }
 </section>

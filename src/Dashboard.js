@@ -19,17 +19,18 @@ const Dashboard = () => {
   })}   
   <footer>
     
-    <form onSubmit={handleNewCommentSubmit( newCommentId, content, setContentToEmptyString)} className='reply_form'>
+    <form onSubmit={handleNewCommentSubmit( newCommentId, content, setContentToEmptyString)} className='form_field comment'>
       <div className='img_container'>
      <img src={state.currentUser.image.png} alt={state.currentUser.username}/>
      </div>
+
      <div className='textarea_container'>
     <textarea name='newCommentContent' value={content} onChange={(e) => setContent(e.target.value)}>
     </textarea>
      </div>
 
   <div className='submit_container'>
- <button type='submit'>
+    <button type='submit'>
       send
     </button>
   </div>

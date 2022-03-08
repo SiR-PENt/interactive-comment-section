@@ -31,7 +31,7 @@ const Replies = ({reply, commentId}) => {
   return (
 
     <article className='comment reply'>
-        
+
     <section>
     <header className='comment_header'>
      <img src={image.png} alt={`${username} 'img'`}/>
@@ -62,12 +62,12 @@ const Replies = ({reply, commentId}) => {
     ( user.username === state.currentUser.username ) ? <div className='reply_container'>
       <div className='userBtn_container'>
     <button onClick={() => handleReplyDelete(commentId, id)} className='btn_danger'>
-     <MdDelete/>
+     <MdDelete className='icon'/>
       Delete
     </button>
 
     <button onClick={() => handleReplyEdit(commentId, id, initializeEdit, setNewContent)} className='btn_primary'>
-      <MdOutlineEdit/>
+      <MdOutlineEdit className='icon'/>
       Edit
     </button>
     </div>

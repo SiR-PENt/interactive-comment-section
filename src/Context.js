@@ -12,12 +12,13 @@ const Context = ({children}) => {
 
 const modifyComment = data.comments.map(comment => {
   const today = new Date();
-  const createdAt = today.getFullYear()+'/'+(today.getMonth() + 1 )+'/'+today.getDate();
+  const createdAt = today.getDate() + '/' + (today.getMonth() + 1 ) + '/' + today.getFullYear();
+
   const commentsId = uuid4();
   const {replies} = comment;
     const modifiedReply = replies.map(reply => { 
     const today = new Date();
-    const createdAt = today.getFullYear()+'/'+(today.getMonth() + 1 )+'/'+today.getDate();
+    const createdAt = today.getDate() +'/' + (today.getMonth() + 1 ) + '/' + today.getFullYear()
     const id = uuid4()
     return  {...reply, id, createdAt}
    })
@@ -26,7 +27,7 @@ const modifyComment = data.comments.map(comment => {
 });//this changes the id of the comment and replies
 
 const initialState = fetchFromLocalStorage() ? fetchFromLocalStorage() : {...data, comments:modifyComment};//update the comment with modifiedComment variable
-
+console.log(initialState);
 const [state, dispatch] = useReducer(reducer, initialState);
 
 useEffect(() => {
