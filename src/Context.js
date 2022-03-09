@@ -1,4 +1,4 @@
-import React,{ useContext, useEffect, useReducer} from 'react'
+import React,{ useState, useContext, useEffect, useReducer} from 'react'
 import data from './data.json';
 import reducer from './reducer';
 import {v4 as uuid4 } from 'uuid';
@@ -9,6 +9,10 @@ const AppContext = React.createContext();// call the context api
  const fetchFromLocalStorage = () => JSON.parse(localStorage.getItem('state'))
 
 const Context = ({children}) => {
+
+// const [deleteComment, setDeleteComment] = useState(false);
+// const [isModalOpen, setIsModalOpen] = useState(false);
+// const commentDelete = () => setDeleteComment(true); //to actually delete the comment
 
 const modifyComment = data.comments.map(comment => {
   const today = new Date();
@@ -44,11 +48,13 @@ const handleNewReplySubmit = (id, content, setToDefault, newId, isEditing) => {
      return dispatch({type: 'HANDLE_REPLY_SUBMIT', payload:{ e, id, content, setToDefault, newId, isEditing }});
 }
 }
-  const handleNewCommentSubmit = (id, content, setToEmptyString) => {
+
+const handleNewCommentSubmit = (id, content, setToEmptyString) => {
    return function(e){
      return dispatch({type: 'HANDLE_COMMENT_SUBMIT', payload:{e, id, content, setToEmptyString}});
+  }
 }
-}
+
  const handleReplyToReply = (commentId, replyId, content, newId, toDefault, isEditing) => {
    return function(e) {
         return dispatch({type: 'HANDLE_REPLY_TO_REPLY', payload:{e, commentId, replyId, content, newId, toDefault, isEditing}})
@@ -73,7 +79,8 @@ const handleReplyEdit = (commentId, id, initializeEdit, setNewContent) => dispat
     handleCommentDelete, 
     handleReplyDelete, 
     handleCommentEdit,
-    handleReplyEdit }}>
+    handleReplyEdit,
+    }}>
         {children}
     </AppContext.Provider>
   )

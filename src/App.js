@@ -1,10 +1,11 @@
 import Dashboard from './Dashboard';
 
 const App = () => {
-  
-  return (
+
+  return  <>
   <Dashboard/>
-  )
+
+  </>
 }
 
 export default App;

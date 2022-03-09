@@ -56,7 +56,6 @@ const generateNewId = uuidv4();
       <AiOutlineMinus />
     </button>
   </div>
-
 </div> 
 {/* end of toggle */}
 
@@ -69,6 +68,7 @@ const generateNewId = uuidv4();
          </span>
     </button>
      </div> : <div className='reply_container'>
+
     <div className='userBtn_container'>
     <button onClick={() => handleCommentDelete(commentId)} className='btn_danger'>
       <MdDelete className='icon'/>

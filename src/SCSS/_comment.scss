@@ -5,20 +5,19 @@
     &>section:nth-child(1) {
         background: $bg-neutral;
         display: grid;
-        grid-template-columns: 90px auto;
+        grid-template-columns: 85px auto;
         grid-template-rows: 60px auto 60px;
         grid-template-areas: "header header" "content content" "toggle reply-container";
         // border: 1px solid red;
         grid-row-gap: 10px;
         border-radius: 10px;
         // overflow: hidden;
-        padding: 20px;
+        padding: 15px;
 
 
         .comment_header {
             grid-area: header;
             width: 90%;
-            border:1px solid;
             display: grid;
             grid-template-columns: repeat(3, auto);
             align-items: center;
@@ -53,7 +52,6 @@
 
         &>.toggle {
             grid-area: toggle;
-            // border: 1px solid;
             color: $btn_primary;
             background: $bg-primary;
             display: grid;
@@ -63,7 +61,7 @@
             height: 80%;
             font-weight: weights(bold);
             text-align: center;
-
+       
             button {
                 color: $text-color-border;
                 font-size: 18px;
@@ -75,11 +73,7 @@
                 }
             }
 
-
-            // span {
-            //     position: relative;
-            //     bottom: 2px;
-            // }
+      
         }
 
         &>.reply_container {
@@ -229,7 +223,7 @@ footer {
             min-height: 200px;
 
             .comment_header {
-                width: 70%;
+                width: 80%;
             }
 
             &>.toggle {
