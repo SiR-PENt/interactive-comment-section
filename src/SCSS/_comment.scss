@@ -7,20 +7,18 @@
         display: grid;
         grid-template-columns: 90px auto;
         grid-template-rows: 60px auto 60px;
-        grid-template-areas: "header header""content content""toggle reply-container";
-        //grid-template-columns:repeat(3, auto);
-        //gridtemplate-rows:auto auto;
-        // "toggle header reply-container" "toggle content content"
+        grid-template-areas: "header header" "content content" "toggle reply-container";
         // border: 1px solid red;
         grid-row-gap: 10px;
         border-radius: 10px;
         // overflow: hidden;
-        padding-inline: 10px;
+        padding: 20px;
 
 
         .comment_header {
             grid-area: header;
-            width: 85%;
+            width: 90%;
+            border:1px solid;
             display: grid;
             grid-template-columns: repeat(3, auto);
             align-items: center;
@@ -43,7 +41,7 @@
             }
         }
 
-        &>p:nth-child(2) {
+        & > p:nth-child(2) {
             grid-area: content;
 
             span {
