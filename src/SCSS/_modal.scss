@@ -56,8 +56,9 @@
                 font-size: 1.2rem;
                 color: $bg-neutral;
                 text-transform: uppercase;
+                
                 &.dont_delete {
-                     background: $text-color-sd;                  
+                     background: $text-color-wk;                  
                 }
                 &.delete {
                     background:$btn_danger;

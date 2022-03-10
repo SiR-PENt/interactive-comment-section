@@ -10,9 +10,23 @@ const AppContext = React.createContext();// call the context api
 
 const Context = ({children}) => {
 
-// const [deleteComment, setDeleteComment] = useState(false);
-// const [isModalOpen, setIsModalOpen] = useState(false);
-// const commentDelete = () => setDeleteComment(true); //to actually delete the comment
+const [isModalOpen, setIsModalOpen] = useState(false); //open modal for delete 
+const [deleteCommentID, setDeleteCommentID] = useState(null); //to get id if the comment that wants to be deleted by the user
+const [deleteReplyID, setDeleteReplyID] = useState(null); //to get the id of the reply that wants to be deleted by the user
+const [deleteType, setDeleteType] = useState(''); //set the type that should be deleted, whether it's comment or reply 
+
+const openModalForCommentDelete = (id, type) => {
+   setDeleteType(type)
+   setIsModalOpen(true);
+   setDeleteCommentID(id);   
+} // to delete comment
+
+const openModalForReplyDelete = (commentId, id, type) => {
+  setDeleteType(type);
+  setIsModalOpen(true);
+  setDeleteCommentID(commentId)
+  setDeleteReplyID(id);
+} // to delete reply
 
 const modifyComment = data.comments.map(comment => {
   const today = new Date();
@@ -28,9 +42,9 @@ const modifyComment = data.comments.map(comment => {
    })
 
   return {...comment, id:commentsId, replies:modifiedReply, createdAt }
-});//this changes the id of the comment and replies
+});//this changes the id, timestamps of the comment and replies
 
-let initialState = fetchFromLocalStorage() ? fetchFromLocalStorage() : {...data, comments:modifyComment};//update the comment with modifiedComment variable
+const initialState = fetchFromLocalStorage() ? fetchFromLocalStorage() : {...data, comments:modifyComment}; //update the comment with modifiedComment variable
 
 const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -38,9 +52,8 @@ useEffect(() => {
     const sortedComments = state.comments.sort((a, b) => b.score - a.score);
     const newState = {...state, comments:sortedComments}; 
     localStorage.setItem('state',JSON.stringify(newState))
-    console.log('useEffect')
-  },[state]);
-    console.log('not UseEffect')
+  },[state]); //the useEffect here, sorts the comment array in decreasing order. The comment with the highest upvote should be at the top. ** NOTE TO SELF ** There's been a malfunction or drawback to this, as useEffects sorts the comments array after the program fetches from the localStorage.  
+    
 const toggleCommentScore = (id, type) => dispatch({type:'TOGGLE_COMMENT', payload:{id, type}});
 
 const toggleReplyScore = (id, type) => (dispatch({type: 'TOGGLE_REPLY' , payload:{id, type}}));
@@ -49,30 +62,33 @@ const handleNewReplySubmit = (id, content, setToDefault, newId, isEditing) => {
    return function(e){
      return dispatch({type: 'HANDLE_REPLY_SUBMIT', payload:{ e, id, content, setToDefault, newId, isEditing }});
 }
-}
+} // used closures here and I'm proud 
 
 const handleNewCommentSubmit = (id, content, setToEmptyString) => {
    return function(e){
      return dispatch({type: 'HANDLE_COMMENT_SUBMIT', payload:{e, id, content, setToEmptyString}});
   }
-}
+} // closures here too
 
  const handleReplyToReply = (commentId, replyId, content, newId, toDefault, isEditing) => {
    return function(e) {
-        return dispatch({type: 'HANDLE_REPLY_TO_REPLY', payload:{e, commentId, replyId, content, newId, toDefault, isEditing}})
+        return dispatch({type: 'HANDLE_REPLY_TO_REPLY', payload: {e, commentId, replyId, content, newId, toDefault, isEditing}})
    }
  }
 
-const handleCommentDelete = (id) => dispatch({type: 'HANDLE_COMMENT_DELETE', payload:id})
+const handleCommentDelete = (id) => dispatch({type: 'HANDLE_COMMENT_DELETE', payload:{id, setIsModalOpen}})
 
-const handleReplyDelete = (commentId, replyId) => dispatch({type: 'HANDLE_REPLY_DELETE', payload:{commentId, replyId}});
+
+const handleReplyDelete = (commentId, replyId) => dispatch({type: 'HANDLE_REPLY_DELETE', payload:{commentId, replyId, setIsModalOpen}});
 
 const handleCommentEdit = (commentId, startEdit, setNewContent) => dispatch({type: 'HANDLE_COMMENT_EDIT', payload:{commentId, startEdit, setNewContent}})
 
 const handleReplyEdit = (commentId, id, initializeEdit, setNewContent) => dispatch({type: 'HANDLE_REPLY_EDIT', payload:{commentId, id, initializeEdit, setNewContent}})
 
+//this is a fucking API lol
   return (
-    <AppContext.Provider value={{ toggleCommentScore, 
+    <AppContext.Provider value={{ 
+    toggleCommentScore, 
     toggleReplyScore, 
     state, 
     handleNewReplySubmit, 
@@ -82,6 +98,13 @@ const handleReplyEdit = (commentId, id, initializeEdit, setNewContent) => dispat
     handleReplyDelete, 
     handleCommentEdit,
     handleReplyEdit,
+    openModalForCommentDelete,
+    openModalForReplyDelete,
+    isModalOpen,
+    setIsModalOpen,
+    deleteCommentID,
+    deleteType,
+    deleteReplyID
     }}>
         {children}
     </AppContext.Provider>

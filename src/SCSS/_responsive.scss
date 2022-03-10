@@ -1,1 +1,41 @@
+@include media-lg {
+    .comment {
+        width: 50%;
 
+        &>section:nth-child(1) {
+            grid-template-columns: 60px auto auto;
+            grid-template-rows: auto auto;
+            grid-template-areas: "toggle header reply-container""toggle content content";
+            padding: 20px;
+            grid-column-gap: 20px;
+            min-height: 200px;
+
+            .comment_header {
+                width: 80%;
+            }
+
+            &>.toggle {
+                align-self: center;
+                grid-template-columns: auto;
+                grid-template-rows: repeat(3, auto);
+                // border: 1px solid;
+            }
+        }
+    }
+
+    .form_field {
+        grid-template-columns: 80px auto 120px;
+        grid-template-rows: auto;
+        grid-template-areas: "img input reply";
+
+        .submit_container {
+            align-self: start;
+        }
+    }
+    footer {
+        width: 50%;
+    }
+    .modal-overlay .modal-container {
+        width: 25%;
+    }
+}

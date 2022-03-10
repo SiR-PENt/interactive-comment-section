@@ -84,13 +84,12 @@ const reducer = (state, action) => {
       replies: [] 
       }
       
-      const addNewComment = [newComment, ...state.comments]
+      const addNewComment = [...state.comments, newComment]
       action.payload.setToEmptyString(); 
-
-      window.scrollTo({
-         top: 0,
-         behavior: 'smooth'
-        });// scrol to top after submit
+      // window.scrollTo({
+      //    top: 0,
+      //    behavior: 'smooth'
+      //   });// scrol to top after submit
       return {...state, comments: addNewComment}
   }
 
@@ -192,7 +191,8 @@ const reducer = (state, action) => {
   }
 
   if (action.type === 'HANDLE_COMMENT_DELETE') {
-    const filteredComments = state.comments.filter(comment => comment.id !== action.payload)
+    const filteredComments = state.comments.filter(comment => comment.id !== action.payload.id);
+    action.payload.setIsModalOpen(false);
     return {...state, comments: filteredComments}
   }
 
@@ -206,6 +206,7 @@ const reducer = (state, action) => {
       }
       return comment;
     })
+    action.payload.setIsModalOpen(false);
     return {...state, comments: newComment}
   }
   

@@ -10,11 +10,13 @@ import { v4 as uuidv4 } from 'uuid';
 const Comments = ({commentData}) => {
 const { id: commentId , content, createdAt, score, user, replies} = commentData;
 const { username, image } = user;
-const { state, toggleCommentScore, handleNewReplySubmit, handleCommentDelete, handleCommentEdit} = useGlobalContext()
+const { state, toggleCommentScore, handleNewReplySubmit, handleCommentEdit, openModalForCommentDelete} = useGlobalContext()
 const [showReply, setShowReply] = useState(false);
 const [newContent, setNewContent] = useState('');
 const [isEditing, setIsEditing] = useState(false);
 
+// const searchValue = React.useRef('');
+// React.useEffect(() => searchValue.current.focus(), [showReply]);
 
 const startEdit = () => {
   setShowReply(true);
@@ -70,7 +72,7 @@ const generateNewId = uuidv4();
      </div> : <div className='reply_container'>
 
     <div className='userBtn_container'>
-    <button onClick={() => handleCommentDelete(commentId)} className='btn_danger'>
+    <button onClick={() => openModalForCommentDelete(commentId, 'comment')} className='btn_danger'>
       <MdDelete className='icon'/>
       Delete
     </button>
@@ -100,7 +102,7 @@ const generateNewId = uuidv4();
     </div>
 
     <div className='textarea_container'>
-    <textarea name='reply' value={newContent} onChange={(e) => setNewContent(e.target.value)} placeholder='Add a reply...'>
+    <textarea name='reply' value={newContent}g onChange={(e) => setNewContent(e.target.value)} placeholder='Add a reply...'>
     </textarea>
     </div>
 

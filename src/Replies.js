@@ -8,13 +8,15 @@ import {v4 as uuid} from 'uuid';
 
 const Replies = ({reply, commentId}) => {
    const {id, content, createdAt, user, score, replyingTo} = reply;
-   const { state, toggleReplyScore, handleReplyToReply, handleReplyDelete, handleReplyEdit } = useGlobalContext();
+   const { state, toggleReplyScore, handleReplyToReply, openModalForReplyDelete, handleReplyEdit } = useGlobalContext();
    const { username, image } = user;
-   const [ showReply, setShowReply ] = useState(false)
+   const [ showReply, setShowReply ] = useState(false);
    const [ newContent, setNewContent ] = useState('');
    const [isEditing, setIsEditing] = useState(false);
-   const [editId, setEditId] = useState(null)
+   const [editId, setEditId] = useState(null);
    const generateNewId = uuid();
+
+   
   
    const initializeEdit = () => {
      setShowReply(true);
@@ -62,7 +64,7 @@ const Replies = ({reply, commentId}) => {
     {
     ( user.username === state.currentUser.username ) ? <div className='reply_container'>
       <div className='userBtn_container'>
-    <button onClick={() => handleReplyDelete(commentId, id)} className='btn_danger'>
+    <button onClick={() => openModalForReplyDelete(commentId, id, 'reply')} className='btn_danger'>
      <MdDelete className='icon'/>
       Delete
     </button>

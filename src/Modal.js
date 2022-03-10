@@ -1,9 +1,13 @@
-
-import React from 'react'
-
+import React from 'react';
+import { useGlobalContext } from './Context';
+// () => handleCommentDelete(commentId)
+// () => handleReplyDelete(commentId, id)
 const Modal = () => {
+  const { isModalOpen, handleCommentDelete, handleReplyDelete, deleteCommentID, setIsModalOpen, deleteType, deleteReplyID } = useGlobalContext();
+
+  const controlDeleteType = () => deleteType === 'comment' ? handleCommentDelete(deleteCommentID) : handleReplyDelete(deleteCommentID, deleteReplyID); 
   return (
-    <div className='modal-overlay show-modal'>
+    <div className={`${isModalOpen ? 'modal-overlay show-modal': 'modal-overlay'}`}>
         <div className='modal-container'>
          <h1>Delete Comment</h1>
         <p>
@@ -11,12 +15,12 @@ const Modal = () => {
         </p>
         <footer>
             <div>
-            <button className='dont_delete'>
+            <button className='dont_delete' onClick={() => setIsModalOpen(false)}>
             No, Cancel
             </button>
             </div>
             <div>          
-            <button className='delete'>
+            <button className='delete' onClick={controlDeleteType}>
             Yes, Delete
             </button>
             </div>
