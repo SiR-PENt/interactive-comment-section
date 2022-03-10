@@ -63,7 +63,7 @@
             text-align: center;
 
             button {
-                color:$button_and_border;
+                color: $button_and_border;
                 font-size: 18px;
                 font-weight: weights(regular);
 
@@ -89,7 +89,7 @@
                 font-family: inherit;
 
                 &:hover {
-                    color:$button_and_border;
+                    color: $button_and_border;
                     transition: color 0.3s linear;
                 }
 
@@ -116,7 +116,7 @@
                     @include user_btn($btn_primary);
 
                     &:hover {
-                        color:$button_and_border;
+                        color: $button_and_border;
                         transition: color 0.3s linear;
                     }
                 }
@@ -181,7 +181,7 @@
             font-weight: weights(medium);
 
             &:hover {
-                background:$button_and_border;
+                background: $button_and_border;
                 transition: color 0.3s linear;
             }
         }
@@ -198,10 +198,55 @@
 // for the dashboard
 footer {
     width: 90%;
+
     .form_field.comment {
         width: 100%;
         height: 220px;
         grid-template-rows: .85fr .15fr;
 
+    }
+}
+// for responsiveness
+@include media-lg {
+    .comment {
+        width: 50%;
+
+        &>section:nth-child(1) {
+            grid-template-columns: 60px auto auto;
+            grid-template-rows: auto auto;
+            grid-template-areas: "toggle header reply-container""toggle content content";
+            padding: 20px;
+            grid-column-gap: 20px;
+            min-height: 200px;
+
+            .comment_header {
+                width: 80%;
+            }
+
+            &>.toggle {
+                align-self: center;
+                grid-template-columns: auto;
+                grid-template-rows: repeat(3, auto);
+                // border: 1px solid;
+            }
+        }
+    }
+
+    .form_field {
+        grid-template-columns: 80px auto 120px;
+        grid-template-rows: auto;
+        grid-template-areas: "img input reply";
+
+        .submit_container {
+            align-self: start;
+        }
+    }
+
+    footer {
+        width: 50%;
+    }
+
+    .modal-overlay .modal-container {
+        width: 25%;
     }
 }
