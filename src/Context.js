@@ -30,15 +30,17 @@ const modifyComment = data.comments.map(comment => {
   return {...comment, id:commentsId, replies:modifiedReply, createdAt }
 });//this changes the id of the comment and replies
 
-const initialState = fetchFromLocalStorage() ? fetchFromLocalStorage() : {...data, comments:modifyComment};//update the comment with modifiedComment variable
-console.log(initialState);
+let initialState = fetchFromLocalStorage() ? fetchFromLocalStorage() : {...data, comments:modifyComment};//update the comment with modifiedComment variable
+
 const [state, dispatch] = useReducer(reducer, initialState);
 
 useEffect(() => {
-    localStorage.setItem('state',JSON.stringify(state))
+    const sortedComments = state.comments.sort((a, b) => b.score - a.score);
+    const newState = {...state, comments:sortedComments}; 
+    localStorage.setItem('state',JSON.stringify(newState))
+    console.log('useEffect')
   },[state]);
-
-
+    console.log('not UseEffect')
 const toggleCommentScore = (id, type) => dispatch({type:'TOGGLE_COMMENT', payload:{id, type}});
 
 const toggleReplyScore = (id, type) => (dispatch({type: 'TOGGLE_REPLY' , payload:{id, type}}));

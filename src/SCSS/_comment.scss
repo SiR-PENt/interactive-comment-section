@@ -7,7 +7,7 @@
         display: grid;
         grid-template-columns: 85px auto;
         grid-template-rows: 60px auto 60px;
-        grid-template-areas: "header header" "content content" "toggle reply-container";
+        grid-template-areas: "header header""content content""toggle reply-container";
         // border: 1px solid red;
         grid-row-gap: 10px;
         border-radius: 10px;
@@ -40,7 +40,7 @@
             }
         }
 
-        & > p:nth-child(2) {
+        &>p:nth-child(2) {
             grid-area: content;
 
             span {
@@ -61,9 +61,9 @@
             height: 80%;
             font-weight: weights(bold);
             text-align: center;
-       
+
             button {
-                color: $text-color-border;
+                color:$button_and_border;
                 font-size: 18px;
                 font-weight: weights(regular);
 
@@ -73,7 +73,7 @@
                 }
             }
 
-      
+
         }
 
         &>.reply_container {
@@ -90,7 +90,7 @@
                 font-family: inherit;
 
                 &:hover {
-                    color: $text-color-border;
+                    color:$button_and_border;
                     transition: color 0.3s linear;
                 }
 
@@ -117,7 +117,7 @@
                     @include user_btn($btn_primary);
 
                     &:hover {
-                        color: $text-color-border;
+                        color:$button_and_border;
                         transition: color 0.3s linear;
                     }
                 }
@@ -182,7 +182,7 @@
             font-weight: weights(medium);
 
             &:hover {
-                background: $text-color-border;
+                background:$button_and_border;
                 transition: color 0.3s linear;
             }
         }
@@ -199,7 +199,6 @@
 // for the dashboard
 footer {
     width: 90%;
-
     .form_field.comment {
         width: 100%;
         height: 220px;
@@ -247,5 +246,8 @@ footer {
 
     footer {
         width: 50%;
+    }
+    .modal-overlay .modal-container {
+        width:25%;
     }
 }

@@ -114,7 +114,6 @@ const generateNewId = uuidv4();
     replies.length > 0 ? replies.map(singleReply => { 
     const newReply = {...singleReply}
     return <Replies key = {singleReply.id} reply={newReply} commentId={commentId} />}) :  <p className='no_reply'>No replies yet</p>  
-
   }
 </section>
   </article> 
