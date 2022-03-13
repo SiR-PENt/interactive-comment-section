@@ -1,27 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { FaReply } from 'react-icons/fa';
 import {MdDelete} from 'react-icons/md'
 import {MdOutlineEdit} from 'react-icons/md'
 import { useGlobalContext } from './Context';
+import { useGlobalEffect } from './useGlobalEffect';
 import Replies from './Replies';
 import { v4 as uuidv4 } from 'uuid';
 
 const Comments = ({commentData}) => {
 const { id: commentId , content, createdAt, score, user, replies} = commentData;
 const { username, image } = user;
-const { state, toggleCommentScore, handleNewReplySubmit, handleCommentEdit, openModalForCommentDelete} = useGlobalContext()
+const { state, toggleCommentScore, handleNewReplySubmit, handleCommentEdit, openModalForCommentDelete } = useGlobalContext()
 const [showReply, setShowReply] = useState(false);
 const [newContent, setNewContent] = useState('');
 const [isEditing, setIsEditing] = useState(false);
 
-// const searchValue = React.useRef('');
-// React.useEffect(() => searchValue.current.focus(), [showReply]);
+const { invalid, setInvalid } = useGlobalEffect();
 
 const startEdit = () => {
   setShowReply(true);
   setIsEditing(true);
- 
 }
 
 const setToDefault = () => {
@@ -94,7 +93,8 @@ const generateNewId = uuidv4();
     newContent, 
     setToDefault, 
     generateNewId, 
-    isEditing
+    isEditing,
+    setInvalid
   )} className='form_field'>
 
     <div className='img-container'>
@@ -102,7 +102,7 @@ const generateNewId = uuidv4();
     </div>
 
     <div className='textarea_container'>
-    <textarea name='reply' value={newContent}g onChange={(e) => setNewContent(e.target.value)} placeholder='Add a reply...'>
+    <textarea name='reply' value={newContent} onChange={(e) => setNewContent(e.target.value)} className={`${invalid && 'invalid'}`} placeholder='Add a reply...'>
     </textarea>
     </div>
 

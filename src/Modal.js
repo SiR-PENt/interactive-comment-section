@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGlobalContext } from './Context';
-// () => handleCommentDelete(commentId)
-// () => handleReplyDelete(commentId, id)
+
+
 const Modal = () => {
   const { isModalOpen, handleCommentDelete, handleReplyDelete, deleteCommentID, setIsModalOpen, deleteType, deleteReplyID } = useGlobalContext();
 

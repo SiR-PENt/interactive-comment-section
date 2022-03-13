@@ -4,6 +4,7 @@ import { FaReply } from 'react-icons/fa';
 import {MdDelete} from 'react-icons/md'
 import {MdOutlineEdit} from 'react-icons/md'
 import { useGlobalContext } from './Context'
+// import { useGlobalEffect } from './useGlobalEffect';
 import {v4 as uuid} from 'uuid';
 
 const Replies = ({reply, commentId}) => {
@@ -15,8 +16,8 @@ const Replies = ({reply, commentId}) => {
    const [isEditing, setIsEditing] = useState(false);
    const [editId, setEditId] = useState(null);
    const generateNewId = uuid();
-
    
+  //  const { invalid, setInvalid } = useGlobalEffect();
   
    const initializeEdit = () => {
      setShowReply(true);
@@ -89,8 +90,7 @@ const Replies = ({reply, commentId}) => {
        generateNewId, 
        setToDefault, 
        isEditing, 
-       editId)}
-       className='form_field'>
+       editId)} className='form_field'>
 
      <div className='img-container'>
       <img src={state.currentUser.image.png} width='35' height='35' alt={state.currentUser.username}/>

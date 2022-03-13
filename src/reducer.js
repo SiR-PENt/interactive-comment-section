@@ -5,20 +5,24 @@ const reducer = (state, action) => {
   if (action.type === 'HANDLE_COMMENT_EDIT'){ //edit user's comment
     action.payload.startEdit();
     let specificComment = state.comments.find(comment => comment.id === action.payload.commentId);
-    action.payload.setNewContent(specificComment.content)
+    action.payload.setNewContent(specificComment.content);
     return state;
   }
 
   //handle user's edit and when submitting a new reply
   if (action.type === 'HANDLE_REPLY_SUBMIT'){ 
-
       action.payload.e.preventDefault();//prevent default
-    
+
+      if (!action.payload.content) {
+       action.payload.setInvalid(true);
+       return state;
+      }
+
       if (action.payload.content && action.payload.isEditing) { //if isEditing is true
         const editedComment = state.comments.map(comment => {// loop through the comment, if comment's id === editID that was clicked, return the comment with the edited content
           if(comment.id === action.payload.id) return {...comment, content:action.payload.content}
           return comment
-        })
+      })
 
         action.payload.setToDefault()
         return {...state, comments: editedComment}
@@ -67,6 +71,10 @@ const reducer = (state, action) => {
   //to create new Comment
   if (action.type === 'HANDLE_COMMENT_SUBMIT' ){
       action.payload.e.preventDefault();
+      if(!action.payload.content){
+        action.payload.setInvalid(true);
+        return state
+      }
       const today = new Date();
       const createdAt = today.getDate() +'/' + (today.getMonth() + 1 ) + '/' + today.getFullYear()
       const newComment = {
@@ -135,9 +143,15 @@ const reducer = (state, action) => {
   }
 
   if (action.type === 'HANDLE_REPLY_TO_REPLY'){
-
+    
     action.payload.e.preventDefault();
-    if(action.payload.isEditing){
+
+    // if (!action.payload.content) { 
+    //  action.payload.setInvalid(true);
+    //  return state;
+    // }
+    
+    if(action.payload.content && action.payload.isEditing){
       const newComment = state.comments.map(comment => {
         if(comment.id === action.payload.commentId){
           const {replies} = comment;

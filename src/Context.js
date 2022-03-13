@@ -15,6 +15,7 @@ const [deleteCommentID, setDeleteCommentID] = useState(null); //to get id if the
 const [deleteReplyID, setDeleteReplyID] = useState(null); //to get the id of the reply that wants to be deleted by the user
 const [deleteType, setDeleteType] = useState(''); //set the type that should be deleted, whether it's comment or reply 
 
+
 const openModalForCommentDelete = (id, type) => {
    setDeleteType(type)
    setIsModalOpen(true);
@@ -58,21 +59,21 @@ const toggleCommentScore = (id, type) => dispatch({type:'TOGGLE_COMMENT', payloa
 
 const toggleReplyScore = (id, type) => (dispatch({type: 'TOGGLE_REPLY' , payload:{id, type}}));
 
-const handleNewReplySubmit = (id, content, setToDefault, newId, isEditing) => {
+const handleNewReplySubmit = (id, content, setToDefault, newId, isEditing, setInvalid) => {
    return function(e){
-     return dispatch({type: 'HANDLE_REPLY_SUBMIT', payload:{ e, id, content, setToDefault, newId, isEditing }});
+     return dispatch({type: 'HANDLE_REPLY_SUBMIT', payload:{ e, id, content, setToDefault, newId, isEditing, setInvalid }});
 }
 } // used closures here and I'm proud 
 
-const handleNewCommentSubmit = (id, content, setToEmptyString) => {
+const handleNewCommentSubmit = (id, content, setToEmptyString, setInvalid) => {
    return function(e){
-     return dispatch({type: 'HANDLE_COMMENT_SUBMIT', payload:{e, id, content, setToEmptyString}});
+     return dispatch({type: 'HANDLE_COMMENT_SUBMIT', payload:{e, id, content, setToEmptyString, setInvalid}});
   }
 } // closures here too
+const handleReplyToReply = (commentId, replyId, content, newId, toDefault, isEditing, setInvalid) => {
 
- const handleReplyToReply = (commentId, replyId, content, newId, toDefault, isEditing) => {
-   return function(e) {
-        return dispatch({type: 'HANDLE_REPLY_TO_REPLY', payload: {e, commentId, replyId, content, newId, toDefault, isEditing}})
+    return function(e) {
+        return dispatch({type: 'HANDLE_REPLY_TO_REPLY', payload: {e, commentId, replyId, content, newId, toDefault, isEditing}});
    }
  }
 
@@ -104,7 +105,7 @@ const handleReplyEdit = (commentId, id, initializeEdit, setNewContent) => dispat
     setIsModalOpen,
     deleteCommentID,
     deleteType,
-    deleteReplyID
+    deleteReplyID,   
     }}>
         {children}
     </AppContext.Provider>

@@ -11,7 +11,7 @@
         // border: 1px solid red;
         grid-row-gap: 10px;
         border-radius: 10px;
-        // overflow: hidden;
+        
         padding: 15px;
 
 
@@ -137,7 +137,7 @@
     grid-template-rows: .65fr .35fr;
     grid-row-gap: 10px;
     padding: 20px;
-    grid-template-areas: "input input""img reply";
+    grid-template-areas: "input input" "img reply";
 
     .img-container {
         grid-area: img;
@@ -157,10 +157,10 @@
             font-size: 18px;
             font-weight: weights(bold);
             font-family: inherit;
-            // &:hover {
-            //     border: $btn-primary;
-            //     transition: border 0.3s linear;
-            // }
+
+            &.invalid {
+                border: 3px solid $btn_danger;
+            }
         }
     }
 
