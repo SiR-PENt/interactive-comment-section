@@ -4,7 +4,7 @@ import { FaReply } from 'react-icons/fa';
 import {MdDelete} from 'react-icons/md'
 import {MdOutlineEdit} from 'react-icons/md'
 import { useGlobalContext } from './Context'
-// import { useGlobalEffect } from './useGlobalEffect';
+import { useToggle } from './useToggle';
 import {v4 as uuid} from 'uuid';
 
 const Replies = ({reply, commentId}) => {
@@ -15,6 +15,7 @@ const Replies = ({reply, commentId}) => {
    const [ newContent, setNewContent ] = useState('');
    const [isEditing, setIsEditing] = useState(false);
    const [editId, setEditId] = useState(null);
+   const  { canToggleUp, setCanToggleUp, canToggleDown, setCanToggleDown } = useToggle()
    const generateNewId = uuid();
    
   //  const { invalid, setInvalid } = useGlobalEffect();
@@ -48,7 +49,7 @@ const Replies = ({reply, commentId}) => {
 
   <div className='toggle'>
      <div>
-      <button onClick={() => toggleReplyScore(id, 'inc')}>
+      <button onClick={() => toggleReplyScore(id, 'inc', canToggleUp, setCanToggleUp, canToggleDown, setCanToggleDown)}>
       <AiOutlinePlus />
       </button>
      </div>
@@ -56,7 +57,7 @@ const Replies = ({reply, commentId}) => {
       <p>{score}</p>
 
    <div>
-    <button onClick={() => toggleReplyScore(id, 'dec')}>
+    <button onClick={() => toggleReplyScore(id, 'dec', canToggleUp, setCanToggleUp, canToggleDown, setCanToggleDown)}>
       <AiOutlineMinus />
     </button>
    </div>

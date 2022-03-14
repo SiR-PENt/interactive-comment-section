@@ -55,9 +55,9 @@ useEffect(() => {
     localStorage.setItem('state',JSON.stringify(newState))
   },[state]); //the useEffect here, sorts the comment array in decreasing order. The comment with the highest upvote should be at the top. ** NOTE TO SELF ** There's been a malfunction or drawback to this, as useEffects sorts the comments array after the program fetches from the localStorage.  
     
-const toggleCommentScore = (id, type) => dispatch({type:'TOGGLE_COMMENT', payload:{id, type}});
+const toggleCommentScore = (id, type, canToggleUp, setCanToggleUp, canToggleDown, setCanToggleDown) => dispatch({type:'TOGGLE_COMMENT', payload:{id, type, canToggleUp, setCanToggleUp, canToggleDown, setCanToggleDown}});
 
-const toggleReplyScore = (id, type) => (dispatch({type: 'TOGGLE_REPLY' , payload:{id, type}}));
+const toggleReplyScore = (id, type, canToggleUp, setCanToggleUp, canToggleDown, setCanToggleDown) => (dispatch({type: 'TOGGLE_REPLY' , payload:{id, type, canToggleUp, setCanToggleUp, canToggleDown, setCanToggleDown}}));
 
 const handleNewReplySubmit = (id, content, setToDefault, newId, isEditing, setInvalid) => {
    return function(e){

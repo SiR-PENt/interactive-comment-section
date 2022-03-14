@@ -5,6 +5,7 @@ import {MdDelete} from 'react-icons/md'
 import {MdOutlineEdit} from 'react-icons/md'
 import { useGlobalContext } from './Context';
 import { useGlobalEffect } from './useGlobalEffect';
+import { useToggle} from './useToggle'
 import Replies from './Replies';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -16,6 +17,7 @@ const [showReply, setShowReply] = useState(false);
 const [newContent, setNewContent] = useState('');
 const [isEditing, setIsEditing] = useState(false);
 
+const { canToggleUp, setCanToggleUp, canToggleDown, setCanToggleDown } = useToggle();
 const { invalid, setInvalid } = useGlobalEffect();
 
 const startEdit = () => {
@@ -45,7 +47,7 @@ const generateNewId = uuidv4();
   <div className='toggle'>
 
   <div>
-    <button onClick={() => toggleCommentScore(commentId, 'inc')} >
+    <button onClick={() => toggleCommentScore(commentId, 'inc', canToggleUp, setCanToggleUp, canToggleDown, setCanToggleDown)} >
       <AiOutlinePlus />
     </button>
  </div>  
@@ -53,7 +55,7 @@ const generateNewId = uuidv4();
    <p>{score}</p>
   
   <div>
-    <button onClick={() => toggleCommentScore(commentId, 'dec')} >
+    <button onClick={() => toggleCommentScore(commentId, 'dec', canToggleUp, setCanToggleUp, canToggleDown, setCanToggleDown)} >
       <AiOutlineMinus />
     </button>
   </div>

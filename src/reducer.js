@@ -65,11 +65,11 @@ const reducer = (state, action) => {
      const specificComment = state.comments.find(comment => comment.id === action.payload.commentId)
      const specificReply = specificComment.replies.find(reply => reply.id === action.payload.id);
      action.payload.setNewContent(specificReply.content)
-     return state;
-     
+     return state;  
   }
   //to create new Comment
-  if (action.type === 'HANDLE_COMMENT_SUBMIT' ){
+  if (action.type === 'HANDLE_COMMENT_SUBMIT' ) {
+
       action.payload.e.preventDefault();
       if(!action.payload.content){
         action.payload.setInvalid(true);
@@ -94,10 +94,6 @@ const reducer = (state, action) => {
       
       const addNewComment = [...state.comments, newComment]
       action.payload.setToEmptyString(); 
-      // window.scrollTo({
-      //    top: 0,
-      //    behavior: 'smooth'
-      //   });// scrol to top after submit
       return {...state, comments: addNewComment}
   }
 
@@ -106,13 +102,22 @@ const reducer = (state, action) => {
 
         const tempComments = state.comments.map(comment => {
            if(comment.id === action.payload.id) {  
+           
+           if(action.payload.type === 'inc') { 
 
-           if(action.payload.type === 'inc'){
-            return {...comment, score: comment.score + 1}   
+             while (action.payload.canToggleUp) {
+               action.payload.setCanToggleUp(false);
+               action.payload.setCanToggleDown(true)
+               return {...comment, score: comment.score + 1} 
+             }        
            }
 
-           if(action.payload.type === 'dec'){              
-            return {...comment, score: comment.score - 1}  
+           if(action.payload.type === 'dec') {      
+             while (comment.score > 0 && action.payload.canToggleDown) { 
+               action.payload.setCanToggleDown(false);
+               action.payload.setCanToggleUp(true);      
+            return {...comment, score: comment.score - 1} 
+             } 
            }
        }
        return comment;
@@ -128,11 +133,22 @@ const reducer = (state, action) => {
       const {replies} = comment // destructure replies
       const modifiedReply = replies.map( reply => {
          if (reply.id === action.payload.id){
+
            if (action.payload.type === 'inc'){
-             return {...reply, score: reply.score + 1}
+             
+             while(action.payload.canToggleUp){
+               action.payload.setCanToggleUp(false);
+               action.payload.setCanToggleDown(true)
+               return {...reply, score: reply.score + 1}
+             }        
            }
-           if (action.payload.type === 'dec'){
-             return {...reply, score: reply.score - 1}
+
+           if (action.payload.type === 'dec') {
+             while (reply.score > 0 && action.payload.canToggleDown) {
+               action.payload.setCanToggleDown(false);
+               action.payload.setCanToggleUp(true);  
+               return {...reply, score: reply.score - 1}
+             }           
            }
          }
          return reply;
@@ -143,7 +159,7 @@ const reducer = (state, action) => {
   }
 
   if (action.type === 'HANDLE_REPLY_TO_REPLY'){
-    
+
     action.payload.e.preventDefault();
 
     // if (!action.payload.content) { 
